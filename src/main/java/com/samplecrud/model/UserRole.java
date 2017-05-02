@@ -21,7 +21,7 @@ public class UserRole implements Serializable {
 
 	private String role;
 
-	@Column(name="user_id")
+	@Column(name="userid")
 	private int userId;
 
 	public UserRole() {
@@ -52,7 +52,7 @@ public class UserRole implements Serializable {
 	}
 	
 	@ManyToOne(fetch = FetchType.LAZY)  
-	@JoinColumn(name = "userid", nullable = false)  
+	@JoinColumn(name = "userid", nullable = false, insertable=false, updatable=false)  
 	private Users user;
 
 	public Users getUser() {

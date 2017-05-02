@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2017 at 07:39 PM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 7.1.1
+-- Generation Time: Apr 30, 2017 at 01:44 PM
+-- Server version: 10.1.16-MariaDB
+-- PHP Version: 5.6.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -62,8 +62,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`userid`, `first_name`, `last_name`, `email`, `bankid`, `username`, `password`, `enabled`) VALUES
 (6, 'satya', 'ch', 'satya@gmail.com', 1, 'admin', 'admin@123', 1),
-(7, 'srinidhi', 'ch', 'srinidhi@gmail.com', 2, 'srinidhi', 'srinidhi@123', 0),
-(8, 'sony', 'n', 'sony@gmail.com', 1, 'sony', 'sony@123', 0),
+(7, 'srinidhi', 'ch', 'srinidhi@gmail.com', 2, 'srinidhi', 'srinidhi@123', 1),
+(8, 'sony', 'n', 'sony@gmail.com', 1, 'sony', 'sony@123', 1),
 (9, 'srujana', 'ch', 'srujana@gmail.com', 2, 'srujana', 'srujana@123', 0),
 (10, 'Srinivesh', 'ch', 'srinivesh@gmail.com', 1, 'sriniviesh', 'sriniviesh@123', 0);
 
@@ -108,20 +108,20 @@ INSERT INTO `users_balance` (`id`, `addamount`, `withdrawamount`, `userid`, `dat
 CREATE TABLE `user_roles` (
   `role_id` int(11) NOT NULL,
   `role` varchar(45) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `userid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user_roles`
 --
 
-INSERT INTO `user_roles` (`role_id`, `role`, `user_id`) VALUES
+INSERT INTO `user_roles` (`role_id`, `role`, `userid`) VALUES
 (1, 'ROLE_ADMIN', 6),
-(2, 'ROLE_ADMIN', 6),
 (3, 'ROLE_USER', 7),
 (4, 'ROLE_USER', 8),
 (5, 'ROLE_USER', 9),
-(6, 'ROLE_USER', 10);
+(6, 'ROLE_USER', 10),
+(7, 'ROLE_USER', 6);
 
 --
 -- Indexes for dumped tables
@@ -174,7 +174,7 @@ ALTER TABLE `users_balance`
 -- AUTO_INCREMENT for table `user_roles`
 --
 ALTER TABLE `user_roles`
-  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

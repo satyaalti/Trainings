@@ -156,5 +156,4 @@ function validateWithdrawAmount() {
 	</c:otherwise>
 	</c:choose>
 	</form>
-</body>
-</html>
+<%@ include file="footer.jsp" %>

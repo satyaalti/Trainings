@@ -6,9 +6,11 @@
  http://www.springframework.org/schema/security/spring-security-3.2.xsd">  
   
  <!-- enable use-expressions -->  
- <http auto-config="true" use-expressions="true">  
-  <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />  
-  <intercept-url pattern="/user**" access="hasRole('ROLE_USER')" />  
+ <http auto-config="true" use-expressions="true">
+  <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
+  <intercept-url pattern="/employee/**" access="hasRole('ROLE_USER')" />
+  <intercept-url pattern="/employeebal/**" access="hasRole('ROLE_USER')" /> 
+  
   
   <!-- access denied page -->  
   <access-denied-handler error-page="/403" />  
@@ -19,17 +21,6 @@
   <csrf />  
  </http>  
   
- 
- <!-- <context:component-scan base-package="com.example.mymodule">
-    <context:exclude-filter type="regex" expression="com.samplecrud.*"/>
-</context:component-scan> -->
- 
- <!-- <authentication-manager>
-	 <authentication-provider user-service-ref="LoginServiceImpl"/>
- </authentication-manager>
-
-	 <beans:bean id="LoginServiceImpl" class="com.samplecrud.service.impl.LoginServiceImpl" />  -->
-
 	<authentication-manager>  
   		<authentication-provider user-service-ref="loginService" />  
  	</authentication-manager>  

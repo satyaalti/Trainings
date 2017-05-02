@@ -45,5 +45,5 @@
 	${errorMsg}
     </c:otherwise>
 	</c:choose>
-</body>
-</html>
+	<%@ include file="footer.jsp" %>
+	

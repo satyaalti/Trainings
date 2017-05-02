@@ -80,7 +80,7 @@
 	</beans:bean>
 	<beans:bean id="loginService" class="com.samplecrud.service.LoginService">
 		<beans:property name="loginDao" ref="loginDao" />
-	</beans:bean>
+	</beans:bean> 
 	
 	<context:component-scan base-package="com.samplecrud" />
 	

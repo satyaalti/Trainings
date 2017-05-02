@@ -17,10 +17,17 @@ import com.samplecrud.model.Users;
 @Controller  
 public class LoginController {  
   
- @RequestMapping(value = { "/", "/home" })  
+ @RequestMapping(value = "/" )  
  public String getUserDefault() {  
-  return "home";  
+	// return "home";
+	return "redirect:/employee/list";
  }  
+ 
+ @RequestMapping(value = "/home" )  
+ public String getHomeDefault() {  
+	 return "home";
+	//return "redirect:/employee/list";
+ } 
   
  @RequestMapping("/login")  
  public String getLoginForm(@ModelAttribute Users user,  HttpServletRequest request, Model model) {
@@ -35,27 +42,28 @@ public class LoginController {
 	 }  
 	 model.addAttribute("message", message);
 	 return "login";  
- }  
-  
+ } 
+ 
  @RequestMapping("/admin**")  
  public String getAdminProfile() {  
-	 return "admin";  
+  return "admin";  
  }  
   
- @RequestMapping("/user**")  
- public String getUserProfile() {  
-	 return "user";  
- }  
-  
+
  @RequestMapping("/403")  
  public String getAccessDenied(Model model) {  
   Authentication auth = SecurityContextHolder.getContext()  
     .getAuthentication();  
   String username = "";  
-  if (!(auth instanceof AnonymousAuthenticationToken)) {  
-   UserDetails userDetail = (UserDetails) auth.getPrincipal();  
-   username = userDetail.getUsername();  
-  }  
+  try {
+	  if (!(auth instanceof AnonymousAuthenticationToken)) {  
+	   UserDetails userDetail = (UserDetails) auth.getPrincipal();  
+	   username = userDetail.getUsername();  
+	  }  
+  }
+  catch(Exception e) {
+	  System.out.println("Something went wrong");
+  }
   model.addAttribute("username", username);
   return "403";
  }
