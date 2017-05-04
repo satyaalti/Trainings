@@ -1,12 +1,25 @@
 $(document).ready(function(){
 	
-		  
+	var csrfToken = $("meta[name='_csrf']").attr("content");
+    var csrfdata = {'X-CSRF-TOKEN': csrfToken};
+  
 	  var getbalance = function() {
 		  
-		  $.post( rooturl+ "employeebal/getbalance", { userid: $("#fromaccount").val() }, function(data) {
-			  $("#baldiv").html("Total balance is: "+data.balance);
-			  $("#total").val(data.balance);
-		  } );
+		  var postdata = {userid: $("#fromaccount").val()};
+		  
+		 // $.extend(postdata, csrfdata);
+		  
+		  $.ajax({
+			    url:  rooturl+ "employeebal/getbalance",
+			    type: 'post',
+			    data: postdata,
+			    headers: csrfdata,
+			    dataType: 'json',
+			    success: function (data) {
+			    	 $("#baldiv").html("Total balance is: "+data.balance);
+					 $("#total").val(data.balance);
+			    }
+			});
 	  }
 	 
 	  getbalance();
@@ -16,25 +29,32 @@ $(document).ready(function(){
 		 getbalance();
 		 getbankuserslist();
 	 })
-	  
 
-	var getbankuserslist = function() {
+	 var getbankuserslist = function() {
 		  
 		  var postdata = {
 				  			fromid: $("#fromaccount").val(), 
 				  			banktype: $("input[name=banktype]:checked").val()
 				  		 }
 		  
-		  $.post( rooturl+ "employeebal/getbankuserslist", postdata  ,  function(data) {
-			  
-			  var options = "<select  id='toaccount' name='toaccount'>" ;
-			  $.each(data, function(key, result){
-				 // alert(result.userid+":"+result.firstName);
-				  options += "<option value = "+result.userid+">"+result.firstName+"</option>"; 
-			  })
-			  options +=	"</select>";
-			  $('#toaccounttd').html(options);
-		  });
+		  
+		  $.ajax({
+			    url:  rooturl+ "employeebal/getbankuserslist",
+			    type: 'post',
+			    data: postdata,
+			    headers: csrfdata,
+			    dataType: 'json',
+			    success: function (data) {
+			    	  var options = "<select  id='toaccount' name='toaccount'>" ;
+					  $.each(data, function(key, result){
+						 // alert(result.userid+":"+result.firstName);
+						  options += "<option value = "+result.userid+">"+result.firstName+"</option>"; 
+					  })
+					  options +=	"</select>";
+					  $('#toaccounttd').html(options);
+			    }
+			});
+		  
 		}
 	  
 	  $("#transferFrm").submit(function(event) {

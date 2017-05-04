@@ -47,7 +47,13 @@ public class LoginController {
  @RequestMapping("/admin**")  
  public String getAdminProfile() {  
   return "admin";  
+ } 
+ 
+ @RequestMapping("/user**")  
+ public String getUserProfile() {  
+  return "user";  
  }  
+  
   
 
  @RequestMapping("/403")  

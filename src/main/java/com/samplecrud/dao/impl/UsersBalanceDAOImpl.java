@@ -2,6 +2,7 @@ package com.samplecrud.dao.impl;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -90,19 +91,27 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Users> getbankuserslist(int userid,int bankid,String banktype) {
-		Session session = this.sessionFactory.getCurrentSession();  
-		Criteria criteria = session.createCriteria(Users.class);
-		if(banktype.equals("SB"))
-		{
-			criteria.add(Restrictions.ne("userid", userid));				 
-			criteria.add(Restrictions.eq("bankid", bankid));
+		
+		List<Users> result = new ArrayList<Users>();
+		try{
+			Session session = this.sessionFactory.openSession();  
+			Criteria criteria = session.createCriteria(Users.class);
+			if(banktype.equals("SB"))
+			{
+				criteria.add(Restrictions.ne("userid", userid));				 
+				criteria.add(Restrictions.eq("bankid", bankid));
+			}
+			else{
+				criteria.add(Restrictions.ne("bankid", bankid));
+						
+			}
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			result = criteria.list();
 		}
-		else{
-			criteria.add(Restrictions.ne("bankid", bankid));
-					
+		catch(Exception e) {
+			
 		}
-		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		return criteria.list();
+		return result;
 	}
 
 	@Override
