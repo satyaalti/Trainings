@@ -15,6 +15,8 @@
 <div><a href="<c:url value='/employee/list' />" >User List</a></div>
 <div style="color: red">${errormsg}</div>
 <form id="transferFrm" method="post">
+ <input type="hidden"  
+    name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />  
 	<table border=1>
 		<tr>
 		<td></td>

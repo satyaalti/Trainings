@@ -24,6 +24,8 @@ function validateWithdrawAmount() {
 <div><h1 style="text-shadow: 2px 2px #FF0000" align=center> ${user.getFirstName()}'s balance</h1></div>
 <div><a href="<c:url value='/employee/list' />" >User List</a> | <a href="<c:url value='/employeebal/transfer' />" >Funds Transfer</a></div>
 <form name="addbalanceform" method="post">
+ <input type="hidden"  
+    name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />  
 		<c:choose> 
 	  				<c:when test="${!empty user.getUserid()}">
 						<input type="hidden" name="userid" value="${user.getUserid()}">
@@ -44,6 +46,8 @@ function validateWithdrawAmount() {
 </form>
 <br/>
 <form name="withbalanceform" method="post" onsubmit="javascript:return validateWithdrawAmount();">
+ <input type="hidden"  
+    name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />  
 	<c:choose> 
 	  				<c:when test="${!empty user.getUserid()}">
 						<input type="hidden" name="userid" value="${user.getUserid()}">

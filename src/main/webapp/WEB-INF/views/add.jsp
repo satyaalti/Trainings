@@ -12,7 +12,8 @@
 </head>
 <body>
 	<form action="<c:url value="/employee/add"/>" method="post">
-	
+	 <input type="hidden"  
+    name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />  
 		 	<c:choose> 
   				<c:when test="${!empty user.getUserid()}">
 					<input type="hidden" name="userid" value="${user.getUserid()}">
