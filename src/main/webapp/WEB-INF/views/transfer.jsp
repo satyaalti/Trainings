@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>Funds Transfer</h1>
-<div><a href="<c:url value='/employee/list' />" >User List</a></div>
+<div><a href="<c:url value='/admin/list' />" >User List</a></div>
 <div style="color: red">${errormsg}</div>
 <form id="transferFrm" method="post">
  <input type="hidden"  

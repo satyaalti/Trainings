@@ -11,7 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="<c:url value="/employee/add"/>" method="post">
+	<form action="<c:url value="/admin/add"/>" method="post">
 	 <input type="hidden"  
     name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />  
 		 	<c:choose> 
@@ -29,6 +29,14 @@
 					<td> <input type="text" name="lastName" value="${user.getLastName()}" /></td>
 				</tr>
 				<tr>
+					<td>Username</td>
+					<td> <input type="text" name="username" value="${user.getUsername()}" /></td>
+				</tr>
+				<tr>
+					<td>Password</td>
+					<td> <input type="text" name="password" value="${user.getPassword()}" /></td>
+				</tr>
+				<tr>
 					<td>Email</td>
 					<td> <input type="email" name="email" value="${user.getEmail() }" /> </td>
 				</tr>
@@ -43,7 +51,7 @@
 		        </select>
 			</td></tr>
 				<tr>
-					<td> <input type="button" name="cancel" value="Cancel" onclick="window.location.href='<c:url value="/employee/list"/>'" /></td>
+					<td> <input type="button" name="cancel" value="Cancel" onclick="window.location.href='<c:url value="/admin/list"/>'" /></td>
 					<td> <input type="submit" value="${!empty user.getUserid() ? 'Update' : 'Submit' }" name="submit" /></td>
 				</tr>
 		</table>

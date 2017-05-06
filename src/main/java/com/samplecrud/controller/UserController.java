@@ -6,8 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.ObjectNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,28 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.samplecrud.model.Bank;
 import com.samplecrud.model.Users;
-import com.samplecrud.service.BankService;
-import com.samplecrud.service.UserService;
 
 @Controller
-@RequestMapping("/employee")
-public class MyFirstController {
-	
-	protected UserService userService;
-	
-	@Autowired(required=true)
-	@Qualifier(value="userService")
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-	
-	protected BankService bankService;
-	
-	@Autowired(required=true)
-	@Qualifier(value="bankService")
-	public void setBankService(BankService bankService) {
-		this.bankService = bankService;
-	}
+@RequestMapping("/admin")
+public class UserController extends CommonController {
 	
 	@RequestMapping("/list") 
 	public  String myFirstMethod(Model model) {
@@ -71,7 +51,7 @@ public class MyFirstController {
 		      else if(request.getParameter("submit").equals("Update")) {
 		    	  this.userService.updateUser(u);
 		      }
-		      return "redirect:/employee/list";
+		      return "redirect:/admin/list";
 		}
 		catch(Exception e)
 		{
@@ -101,7 +81,7 @@ public class MyFirstController {
 	@RequestMapping(value="/remove/{id}" ,method = {RequestMethod.POST,RequestMethod.GET})
 	public String removeUser(@PathVariable("id") int id){
 	    this.userService.removeUser(id);
-        return "redirect:/employee/list";
+        return "redirect:/admin/list";
     }
 	
 }

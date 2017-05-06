@@ -5,6 +5,8 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,4 +80,25 @@ public class UserDAOImpl implements UserDAO {
 		}
 		logger.info("Person deleted successfully, person details="+u);
 	}
+	
+	@Override
+	 public Users findByUserName(String username) {  
+		
+		Users user = null;
+		try {
+			Session session = this.sessionFactory.openSession(); 
+			Transaction tx = null;
+			tx = session.getTransaction();  
+			session.beginTransaction(); 
+			Criteria criteria = session.createCriteria(Users.class)
+						.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+						.add(Restrictions.eq("username", username));
+			user = (Users) criteria.list().get(0);  
+			tx.commit();  
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return user;  
+	 }  
 }

@@ -45,6 +45,12 @@ public class UserServiceImpl implements UserService {
 	public void removeUser(int id) {
 		this.userDAO.removeUser(id);
 	}
+
+	@Override
+	public Users findByUserName(String username) {
+		// TODO Auto-generated method stub
+		return this.userDAO.findByUserName(username);
+	}
 	
 }
 	

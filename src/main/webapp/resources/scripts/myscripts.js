@@ -10,7 +10,7 @@ $(document).ready(function(){
 		 // $.extend(postdata, csrfdata);
 		  
 		  $.ajax({
-			    url:  rooturl+ "employeebal/getbalance",
+			    url:  rooturl+ "admin/getbalance",
 			    type: 'post',
 			    data: postdata,
 			    headers: csrfdata,
@@ -39,7 +39,7 @@ $(document).ready(function(){
 		  
 		  
 		  $.ajax({
-			    url:  rooturl+ "employeebal/getbankuserslist",
+			    url:  rooturl+ "admin/getbankuserslist",
 			    type: 'post',
 			    data: postdata,
 			    headers: csrfdata,

@@ -7,8 +7,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,28 +23,11 @@ import com.samplecrud.gson.UserBalanceExclusionStrategy;
 import com.samplecrud.gson.UserExclusionStrategy;
 import com.samplecrud.model.Users;
 import com.samplecrud.model.UsersBalance;
-import com.samplecrud.service.UserService;
-import com.samplecrud.service.UsersBalanceService;
 
 @Controller
-@RequestMapping("/employeebal")
-public class UserBalanceController extends MyFirstController {
+@RequestMapping("/admin")
+public class UserBalanceController extends CommonController {
 	
-	private UsersBalanceService usersBalanceService;
-	
-	@Autowired(required=true)
-	@Qualifier(value="usersBalanceService")
-	public void setUsersBalanceService(UsersBalanceService usersBalanceService) {
-		this.usersBalanceService = usersBalanceService;
-	}
-	
-	protected UserService userService;
-	
-	@Autowired(required=true)
-	@Qualifier(value="userService")
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
 	
 	@RequestMapping("/balanceinfo/{userid}")
     public String addAmount(@PathVariable("userid") int userid, HttpServletRequest request, @ModelAttribute("users_balance") UsersBalance ub, Model model){
@@ -56,7 +37,7 @@ public class UserBalanceController extends MyFirstController {
 		    	  
 		    	  ub.setTypeoftxn("M");
 		    	  this.usersBalanceService.addAmount(ub);
-		    	  return "redirect:/employeebal/balanceinfo/"+userid;
+		    	  return "redirect:/admin/balanceinfo/"+userid;
 		      }
 		      else if(request.getParameter("withdrawbalancebtn") != null &&  request.getParameter("withdrawbalancebtn").equals("Submit")) {
 		    	    ub.setTypeoftxn("W");
@@ -68,7 +49,7 @@ public class UserBalanceController extends MyFirstController {
 					}
 				    
 				    this.usersBalanceService.withdrawAmount(ub);
-				    return "redirect:/employeebal/balanceinfo/"+userid;
+				    return "redirect:/admin/balanceinfo/"+userid;
 				    
 		      }
 		     
@@ -101,6 +82,7 @@ public class UserBalanceController extends MyFirstController {
         
     }
 	
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="/transfer", method = {RequestMethod.POST, RequestMethod.GET})
 	public String transfer(Model model,HttpServletRequest request) {
 		String errormsg = "";
@@ -118,25 +100,17 @@ public class UserBalanceController extends MyFirstController {
 			double transferfee= 0;
 			double key=0;
 			if(banktype.equals("DB")){
-				
 				Map<Integer, Double> aMap =Variables.aMap;
 					Iterator it = aMap.entrySet().iterator();
 			     while (it.hasNext()) {
 			            Map.Entry pair = (Map.Entry)it.next();
-			            System.out.println(pair.getKey() + " = " + pair.getValue());
 			            // avoids a ConcurrentModificationException
-			           
 			            key=Double.parseDouble(pair.getKey().toString());//convert obj to string then double
 			            transferfee=Double.parseDouble(pair.getValue().toString());
 			            if(transferamount<=key)
 			            	break;
 			     }
 			     ub1.setTransferfee(transferfee);
-			     /*ub1.setUserid(fromuserid);
-			      withdrawAmount = transferamount+transferfee;
-				ub1.setWithdrawamount(withdrawAmount);
-			        System.out.println(transferfee);*/
-			        
 			}   
 			           
 			     double withdrawAmount = transferamount;
@@ -168,7 +142,7 @@ public class UserBalanceController extends MyFirstController {
 						ub.setTypeoftxn("T");
 						ub.setTransferid(fromuserid);
 						this.usersBalanceService.addAmount(ub);
-						return "redirect:/employee/list"; 
+						return "redirect:/admin/list"; 
 				
 			        }
 			

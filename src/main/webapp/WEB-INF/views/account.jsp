@@ -21,8 +21,8 @@ function validateWithdrawAmount() {
 </script>
 </head>
 <body>
-<div><h1 style="text-shadow: 2px 2px #FF0000" align=center> ${user.getFirstName()}'s balance</h1></div>
-<div><a href="<c:url value='/admin/list' />" >User List</a> | <a href="<c:url value='/admin/transfer' />" >Funds Transfer</a></div>
+<div><h1 style="text-shadow: 2px 2px #FF0000" align=center> ${user.getFirstName()}'s Account Information</h1></div>
+<div><a href="<c:url value='/admin/list' />" >User List</a> | <a href="<c:url value='/admin/transfer' />" >Admin Funds Transfer</a> | | <a href="<c:url value='/my/transfer' />" >Funds Transfer</a></div>
 <form name="addbalanceform" method="post">
  <input type="hidden"  
     name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />  

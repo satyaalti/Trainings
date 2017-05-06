@@ -20,9 +20,6 @@ import com.samplecrud.dao.UsersBalanceDAO;
 import com.samplecrud.model.Users;
 import com.samplecrud.model.UsersBalance;
 
-
-
-
 public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 	private SessionFactory sessionFactory;
 	public void setSessionFactory(SessionFactory sf){
@@ -76,9 +73,7 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 			
 			
 			List list = criteria.list();
-			System.out.println(list);
 			bal = list.get(0).toString();
-			System.out.println(list.get(0).toString());
 		}
 		catch (NullPointerException e) {
 			System.out.println("No records found");
@@ -120,7 +115,6 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date dateobj = new Date();
 		String current_date = df.format(dateobj);
-		System.out.println(current_date);
 		
 		Session session = this.sessionFactory.getCurrentSession();  
 		Criteria criteria = session.createCriteria(UsersBalance.class)
@@ -132,14 +126,6 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 		 Long count = (Long) criteria.uniqueResult();
 		 int cnt = count.intValue();
 		 return cnt;
-		 //Calendar c = Calendar.getInstance();
-		// .add(Restrictions.between("date", c.getdate());							
-		//add.(Restrictions.in("Typeoftxn", Arrays.asList("W","WT")));
-		//Criteria rest1= Restrictions.eq("Typeoftxn", "W"), 
-			//	Criteria rest2= Restrictions.eq(Typeoftxn, "WT"), 
-				//		criteria.add(Restrictions.or(rest1, rest2));
-		//.add(Restrictions.or(Restrictions.eq("Typeoftxn", "W"), Restrictions.eq("Typeoftxn","WT")));
-		
 	}
 }
 		

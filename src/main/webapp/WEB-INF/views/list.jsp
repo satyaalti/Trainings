@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="<c:url value="/employee/add"/>">add user</a>
-<a href="<c:url value="/employeebal/transfer"/>">transfer</a>
+<a href="<c:url value="/admin/add"/>">add user</a>
+<a href="<c:url value="/admin/transfer"/>">transfer</a>
 <c:out value="${sessionScope.total}" />	
 
 <h3>Users List</h3>
@@ -29,9 +29,9 @@
 			<td>${user.getLastName()}</td>
 			<td>${user.getEmail() }</td>
 			<td>${user.getBank().getBankname()}</td>
-			<td><a href="<c:url value='/employee/edit/${user.getUserid()}' />" >edit</a></td>
-			<td><a href="<c:url value='/employee/remove/${user.getUserid()}' />" >Remove</a></td>
-			<td><a href="<c:url value='/employeebal/balanceinfo/${user.getUserid()}' />" >Account</a></td>
+			<td><a href="<c:url value='/admin/edit/${user.getUserid()}' />" >edit</a></td>
+			<td><a href="<c:url value='/admin/remove/${user.getUserid()}' />" >Remove</a></td>
+			<td><a href="<c:url value='/admin/balanceinfo/${user.getUserid()}' />" >Account</a></td>
 			
 	</tr>
 	</c:forEach>

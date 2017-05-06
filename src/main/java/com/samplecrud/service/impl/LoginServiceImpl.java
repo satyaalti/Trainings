@@ -1,11 +1,10 @@
-package com.samplecrud.service;
+package com.samplecrud.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -13,23 +12,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.samplecrud.dao.LoginDao;
+import com.samplecrud.dao.UserDAO;
 import com.samplecrud.model.UserRole;
 import com.samplecrud.model.Users;
   
-public class LoginService implements UserDetailsService {  
+public class LoginServiceImpl implements UserDetailsService {  
   
-	 @Autowired  
-	 private LoginDao loginDao; 
-	 
-	 public void setLoginDao(LoginDao loginDao) {
-		this.loginDao = loginDao;
-	}
+	 private UserDAO userDAO;
 
-	@Override  
+	 public void setUserDAO(UserDAO userDAO) {
+	 	this.userDAO = userDAO;
+	 }
+	 
+	 @Override  
 	 public UserDetails loadUserByUsername(String username)  throws UsernameNotFoundException {  
 	  
-		  Users user = loginDao.findByUserName(username);  
+		  Users user = this.userDAO.findByUserName(username);  
 		  List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRole());  
 		  return buildUserForAuthentication(user, authorities); 
 		  

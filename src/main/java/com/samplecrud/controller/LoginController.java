@@ -15,12 +15,14 @@ import com.samplecrud.model.Users;
   
   
 @Controller  
-public class LoginController {  
+public class LoginController extends CommonController {  
   
  @RequestMapping(value = "/" )  
- public String getUserDefault() {  
-	// return "home";
-	return "redirect:/employee/list";
+ public String getUserDefault(HttpServletRequest request) { 
+	 
+	 Users user = this.getLoggedInUser();
+	 request.getSession().setAttribute("LOGGED_IN_USER", user);
+	 return "redirect:/my/account";
  }  
  
  @RequestMapping(value = "/home" )  
@@ -38,6 +40,7 @@ public class LoginController {
 	 if (error != null) {  
 		 message = "Incorrect username or password !";  
 	 } else if (logout != null) {  
+		 request.getSession().invalidate();
 		 message = "Logout successful !";  
 	 }  
 	 model.addAttribute("message", message);
