@@ -45,7 +45,8 @@ $(document).ready(function(){
 			    headers: csrfdata,
 			    dataType: 'json',
 			    success: function (data) {
-			    	  var options = "<select  id='toaccount' name='toaccount'>" ;
+			    	  var options = "<select  id='toaccount' name='toaccount'>" +
+			    	  				"<option value=''>Select An Account</option>" ;	
 					  $.each(data, function(key, result){
 						 // alert(result.userid+":"+result.firstName);
 						  options += "<option value = "+result.userid+">"+result.firstName+"</option>"; 
@@ -59,13 +60,13 @@ $(document).ready(function(){
 	  
 	  $("#transferFrm").submit(function(event) {
 		 var from = $("#fromaccount").val();
-		 var to = parseInt($("#toaccount").val());
+		 var to = $("#toaccount").val();
 		 var total = parseInt($("#total").val());
 		 var transferamount = $("#transferamount").val();
 		 
-		if( from==to) {
+		if(to == "") {
 			event.preventDefault();
-			alert("use another name for to user");
+			alert("Please select an account to transfer");
 		}
 		else if(transferamount == "" || transferamount <= 0 ) {
 			event.preventDefault();

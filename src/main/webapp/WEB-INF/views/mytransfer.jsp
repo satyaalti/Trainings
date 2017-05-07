@@ -20,7 +20,6 @@
  <input type="hidden" name="total" id="total" value="" />
  <input type="hidden" name="fromaccount" id="fromaccount" value="${user.getUserid()}"  />
 	<table border="1">
-		
 		<tr>
 		<td colspan="2"><input type="radio" name="banktype" id="banktype"  value="SB" checked >Samebank
 		<input type="radio" name="banktype" id="banktype"  value="DB"   >Diferrentbank</td></tr>
