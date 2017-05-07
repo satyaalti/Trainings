@@ -1,5 +1,7 @@
 package com.samplecrud.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -39,7 +41,7 @@ public class CommonController {
 	}
 	
 
-	public  Users getLoggedInUser() {
+	public  void setLoggedInUser(HttpServletRequest request) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();  
 		String username = ""; 
 		Users user = null;
@@ -48,16 +50,24 @@ public class CommonController {
 				   UserDetails userDetail = (UserDetails) auth.getPrincipal();  
 				   username = userDetail.getUsername();
 				   
-				   if(!username.isEmpty())
+				   if(!username.isEmpty()) {
 					   user = this.userService.findByUserName(username);
+					   request.getSession().setAttribute("LOGGED_IN_USER", user);
+				   }
 			  }  
 		 }
 		 catch(Exception e) {
 			 e.printStackTrace();
 			 System.out.println("Something went wrong");
 		 }
-		 
-		return user;
 	}
 	
+	public Users getLoggedInUser(HttpServletRequest request) {
+		Users user = (Users) request.getSession().getAttribute("LOGGED_IN_USER");
+		if(user == null) {
+			this.setLoggedInUser(request);
+			user = (Users) request.getSession().getAttribute("LOGGED_IN_USER");
+		}
+		return user;
+	}
 }

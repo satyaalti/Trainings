@@ -15,7 +15,6 @@ function validateWithdrawAmount() {
 		alert("Insufficient balance. You can withdraw upto :" + total_bal + "/- only");
 		return false;
 	}
-	
 	return true;
 }
 </script>
@@ -73,17 +72,13 @@ function validateWithdrawAmount() {
 <table border="1" bgcolor="#FFF0F5">
   
 	<tr>
-		
 		<th width="120">Date</th>
 		<th>Type of txn</th>
 		<th width="120" >Add amount</th>
 		<th width="120">Withdraw Amount</th>
-		
 		<th>WithdrawFee</th>
 		<th>TransferFee</th>
-		
 		<th>Total Balance</th>
-		
 	</tr>
 	
 	<c:set var="addtotal" value="${0}"/>
@@ -94,14 +89,13 @@ function validateWithdrawAmount() {
 		<tr>
 			<td><fmt:formatDate pattern="dd-MM-yyyy" value="${user.getDate()}" /> </td>
 			<td>
-			
 				<c:choose> 
 	  				<c:when test="${user.getTypeoftxn() == 'M'}">
 						Myself
 				 	</c:when>
 				 	
 				 	<c:when test="${user.getTypeoftxn() == 'T'}">
-						Transfer from
+						Transfer
 				 	</c:when>
 				 	
 				 	<c:when test="${user.getTypeoftxn() == 'W'}">
@@ -111,7 +105,8 @@ function validateWithdrawAmount() {
 						withdraw transfer
 				 	</c:when>
 				</c:choose> 
-				</td>
+			</td>
+			
 			<td style="${user.getAddamount() eq 0 ? '':'background-color: #ADFF2F'}" >
 			    ${user.getAddamount()}
 			</td>
@@ -119,35 +114,29 @@ function validateWithdrawAmount() {
 			<td style="${user.getWithdrawamount() eq 0 ? '':'background-color: #CD5C5C'}">
 			     ${user.getWithdrawamount()}
 			</td>
+			<td style="${user.getWithdrawfee() eq 0 ? '':'background-color: #FFD700'}">
+				${user.getWithdrawfee()}
+			</td>
 			
-				<td style="${user.getWithdrawfee() eq 0 ? '':'background-color: #FFD700'}">
-					${user.getWithdrawfee()}
-				</td>
-				
-				<td style="${user.getTransferfee() eq 0 ? '':'background-color: 	#00FFFF'}">
-					${user.getTransferfee()}
-				</td>
+			<td style="${user.getTransferfee() eq 0 ? '':'background-color: 	#00FFFF'}">
+				${user.getTransferfee()}
+			</td>
 			<c:set var="addtotal" value="${addtotal + user.getAddamount()}" />
 			<c:set var="withdrawtotal" value="${withdrawtotal + user.getWithdrawamount()}"/>
 			<c:set var="withdrawfeetotal" value="${withdrawfeetotal + user.getWithdrawfee()}" />
 			<c:set var="transferfeetotal" value="${transferfeetotal + user.getTransferfee()}" />
-			
 		</tr>
 	</c:forEach>
 		<tr>
 			<td>Total</td>
-			<td>
-			
-			</td>
+			<td></td>
 			<td>${addtotal}</td>
 			<td>${withdrawtotal}</td>
 			<td>${withdrawfeetotal}</td>
 			<td>${transferfeetotal}</td>
 			<td>${bal} </td>
-			
 			<input type="hidden" id="totalbalance"  value="${bal}" />
 		</tr>
-		
 </table>
 	</c:when>
 	<c:otherwise>

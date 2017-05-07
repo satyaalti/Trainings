@@ -28,7 +28,6 @@ import com.samplecrud.model.UsersBalance;
 @RequestMapping("/admin")
 public class UserBalanceController extends CommonController {
 	
-	
 	@RequestMapping("/balanceinfo/{userid}")
     public String addAmount(@PathVariable("userid") int userid, HttpServletRequest request, @ModelAttribute("users_balance") UsersBalance ub, Model model){
 		
@@ -93,10 +92,7 @@ public class UserBalanceController extends CommonController {
 			double transferamount = Double.parseDouble(request.getParameter("transferamount"));
 			double totalbal_fromuserid = Double.parseDouble(this.usersBalanceService.getbalance(fromuserid));
 			String banktype=request.getParameter("banktype");
-			System.out.println(banktype);
-			System.out.println(transferamount);
 			UsersBalance ub1=new UsersBalance();//for every object cration need to call service to set values to db
-			//double withdrawAmount = transferamount;
 			double transferfee= 0;
 			double key=0;
 			if(banktype.equals("DB")){
@@ -113,68 +109,35 @@ public class UserBalanceController extends CommonController {
 			     ub1.setTransferfee(transferfee);
 			}   
 			           
-			     double withdrawAmount = transferamount;
-			
+			double withdrawAmount = transferamount;
 			int rowCount = this.usersBalanceService.rowCount(fromuserid);
 			
 			if(rowCount > Variables.WITHDRAW_COUNT) {
-				
 				withdrawAmount = transferamount + 10;
-				//UsersBalance ub1=new UsersBalance();
-				ub1.setWithdrawfee(10);///need to write setWithdrawamount................................
+				ub1.setWithdrawfee(10);
 			}
 			
-			        if(totalbal_fromuserid < transferamount) {
-			        	errormsg = "You have insufficient balance";
-			        }
-			
-			        else{
+	        if(totalbal_fromuserid < transferamount) {
+	        	errormsg = "You have insufficient balance";
+	        }
+	        else{
+				ub1.setUserid(fromuserid);
+				ub1.setWithdrawamount(withdrawAmount);
+				ub1.setTypeoftxn("WT");
+				this.usersBalanceService.withdrawAmount(ub1);
 				
-				
-						ub1.setUserid(fromuserid);
-						ub1.setWithdrawamount(withdrawAmount);
-						ub1.setTypeoftxn("WT");
-						this.usersBalanceService.withdrawAmount(ub1);
-						
-						UsersBalance ub=new UsersBalance();
-						ub.setUserid(touserid);
-						ub.setAddamount(transferamount);
-						ub.setTypeoftxn("T");
-						ub.setTransferid(fromuserid);
-						this.usersBalanceService.addAmount(ub);
-						return "redirect:/admin/list"; 
-				
-			        }
-			
+				UsersBalance ub=new UsersBalance();
+				ub.setUserid(touserid);
+				ub.setAddamount(transferamount);
+				ub.setTypeoftxn("T");
+				ub.setTransferid(fromuserid);
+				this.usersBalanceService.addAmount(ub);
+				return "redirect:/admin/list"; 
+	        }
 		}
 		model.addAttribute("errormsg", errormsg);
 		model.addAttribute("userlist",this.userService.listUsers());
-		
-			
 		return "transfer";
 	}
 	
-	@RequestMapping(value="/getbalance", method = {RequestMethod.POST}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	@ResponseBody
-	public String getbalance(HttpServletRequest request) {
-		int userid=Integer.parseInt(request.getParameter("userid"));
-		String bal = this.usersBalanceService.getbalance(userid);
-		return "{ \"balance\": \""+bal+"\", \"userid\": \""+userid+"\"  }";
-	}
-	
-	@RequestMapping(value="/getbankuserslist", method = {RequestMethod.POST},produces = {MediaType.APPLICATION_JSON_VALUE})
-	@ResponseBody
-	public String getbankuserslist(HttpServletRequest request) {
-		int fromid=Integer.parseInt(request.getParameter("fromid"));
-		Users user = this.userService.getUserById(fromid);
-		int bankid=user.getBankid();
-		String banktype=request.getParameter("banktype");
-		
-		List<Users> userlist = this.usersBalanceService.getbankuserslist(fromid,bankid,banktype);
-		Gson gson = new GsonBuilder()
-					.setExclusionStrategies(new UserExclusionStrategy())
-					.setExclusionStrategies(new UserBalanceExclusionStrategy())
-					.create();
-	    return gson.toJson(userlist);
-	}	
 }
