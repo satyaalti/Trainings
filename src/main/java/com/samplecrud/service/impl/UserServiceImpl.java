@@ -2,6 +2,8 @@ package com.samplecrud.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.samplecrud.dao.UserDAO;
@@ -11,6 +13,9 @@ import com.samplecrud.service.UserService;
 public class UserServiceImpl implements UserService {
 	
 	private UserDAO userDAO;
+	
+	 @Autowired
+	 private PasswordEncoder passwordEncoder;
 
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
@@ -19,12 +24,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void addUser(Users u) {
+		u.setPassword(passwordEncoder.encode(u.getPassword()));
+		System.out.println(u.toString());
 		this.userDAO.addUser(u);
 	}
 
 	@Override
 	@Transactional
 	public void updateUser(Users u) {
+		u.setPassword(passwordEncoder.encode(u.getPassword()));
+		System.out.println(u.toString());
 		this.userDAO.updateUser(u);
 	}
 

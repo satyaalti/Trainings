@@ -43,8 +43,10 @@ public class Users implements Serializable {
 	@Column(name="bankid")
 	private int bankid;
 	
+	@Column(name="password")
 	private String password;
-
+	
+	@Column(name="username")
 	private String username;
 	
 	private boolean  enabled;
@@ -75,8 +77,11 @@ public class Users implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [userid=" + userid + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", bankid=" + bankid  + ", bank=" + bank + "]";
+		return "Users [userid=" + userid + ", email=" + email + ", firstName="
+				+ firstName + ", lastName=" + lastName + ", bankid=" + bankid
+				+ ", password=" + password + ", username=" + username
+				+ ", enabled=" + enabled + ", usersBalance=" + usersBalance
+				+ ", bank=" + bank + ", userRole=" + userRole + "]";
 	}
 
 	public int getBankid() {

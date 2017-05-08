@@ -34,7 +34,7 @@
 				</tr>
 				<tr>
 					<td>Password</td>
-					<td> <input type="text" name="password" value="${user.getPassword()}" /></td>
+					<td> <input type="password" name="password" value="" /></td>
 				</tr>
 				<tr>
 					<td>Email</td>

@@ -21,7 +21,7 @@ import com.samplecrud.model.Users;
 public class UserController extends CommonController {
 	
 	@RequestMapping("/list") 
-	public  String myFirstMethod(Model model) {
+	public  String UsersList(Model model) {
 		String errorMsg = "";
 		List<Users>  userlist = new ArrayList<Users>();
 		try{
@@ -57,12 +57,8 @@ public class UserController extends CommonController {
 		{
 			e.printStackTrace();
 		}
-		List<Bank> bankslist = new ArrayList<Bank>();
-		bankslist = this.bankService.listOfBanks();
-		System.out.println("banks"+bankslist.toString());
 		
-		
-		model.addAttribute("bankslist",bankslist);
+		model.addAttribute("bankslist",this.bankService.listOfBanks());
 		return "add";
 	}
 	

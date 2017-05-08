@@ -26,14 +26,20 @@ public class LoginServiceImpl implements UserDetailsService {
 	 
 	 @Override  
 	 public UserDetails loadUserByUsername(String username)  throws UsernameNotFoundException {  
-	  
+	      
 		  Users user = this.userDAO.findByUserName(username);  
 		  List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRole());  
-		  return buildUserForAuthentication(user, authorities); 
-		  
+		  try {
+			  return buildUserForAuthentication(user, authorities);
+		  } 
+		  catch (Exception e) {
+				// TODO Auto-generated catch block
+			  e.printStackTrace();
+		  } 
+		 return null; 
 	 }  
 	  
-	 private User buildUserForAuthentication(Users user, List<GrantedAuthority> authorities) {  
+	 private User buildUserForAuthentication(Users user, List<GrantedAuthority> authorities) {
 		 return new User(user.getUsername(), user.getPassword(), user.isEnabled(), true, true, true, authorities);  
 	 }  
 	  

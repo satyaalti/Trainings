@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2017 at 01:44 PM
+-- Generation Time: May 08, 2017 at 07:41 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -37,7 +37,8 @@ CREATE TABLE `banks` (
 
 INSERT INTO `banks` (`bankid`, `bankname`) VALUES
 (1, 'ICICI'),
-(2, 'SBI');
+(2, 'SBI'),
+(3, 'AXIS');
 
 -- --------------------------------------------------------
 
@@ -52,7 +53,7 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `bankid` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `enabled` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -61,11 +62,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userid`, `first_name`, `last_name`, `email`, `bankid`, `username`, `password`, `enabled`) VALUES
-(6, 'satya', 'ch', 'satya@gmail.com', 1, 'admin', 'admin@123', 1),
-(7, 'srinidhi', 'ch', 'srinidhi@gmail.com', 2, 'srinidhi', 'srinidhi@123', 1),
-(8, 'sony', 'n', 'sony@gmail.com', 1, 'sony', 'sony@123', 1),
-(9, 'srujana', 'ch', 'srujana@gmail.com', 2, 'srujana', 'srujana@123', 0),
-(10, 'Srinivesh', 'ch', 'srinivesh@gmail.com', 1, 'sriniviesh', 'sriniviesh@123', 0);
+(1, 'Admin', 'Admin', 'admin@123', 2, 'admin', '$2a$10$32vdAC.Zl6Z9J9zL7Btr2OGf1EohGdlXLN/vm70aqqVEKPhAVdBAa', 1),
+(2, 'Satya', 'Ch', 'satya@gmail.com', 1, 'satya', '$2a$10$rqOQ5rUV8Eng7zg1QMhtDO5ytrJt07nJA2HwWHHMUHCutQl441i/O', 1);
 
 -- --------------------------------------------------------
 
@@ -85,20 +83,6 @@ CREATE TABLE `users_balance` (
   `transferid` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `users_balance`
---
-
-INSERT INTO `users_balance` (`id`, `addamount`, `withdrawamount`, `userid`, `date`, `typeoftxn`, `withdrawfee`, `transferfee`, `transferid`) VALUES
-(1, 100, 0, 6, '2017-04-15 16:38:19', 'M', 0, 0, 0),
-(2, 0, 20, 6, '2017-04-22 22:24:57', 'WT', 0, 3, 0),
-(3, 20, 0, 7, '2017-04-22 22:24:57', 'T', 0, 0, 6),
-(4, 0, 2, 6, '2017-04-22 23:07:35', 'W', 0, 0, 0),
-(5, 0, 3, 6, '2017-04-22 23:07:37', 'W', 0, 0, 0),
-(6, 0, 4, 6, '2017-04-22 23:07:40', 'W', 0, 0, 0),
-(7, 0, 5, 6, '2017-04-22 23:07:45', 'W', 0, 0, 0),
-(8, 0, 6, 6, '2017-04-22 23:07:48', 'W', 10, 0, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -116,12 +100,9 @@ CREATE TABLE `user_roles` (
 --
 
 INSERT INTO `user_roles` (`role_id`, `role`, `userid`) VALUES
-(1, 'ROLE_ADMIN', 6),
-(3, 'ROLE_USER', 7),
-(4, 'ROLE_USER', 8),
-(5, 'ROLE_USER', 9),
-(6, 'ROLE_USER', 10),
-(7, 'ROLE_USER', 6);
+(1, 'ROLE_USER', 1),
+(2, 'ROLE_ADMIN', 1),
+(3, 'ROLE_USER', 2);
 
 --
 -- Indexes for dumped tables
@@ -159,22 +140,22 @@ ALTER TABLE `user_roles`
 -- AUTO_INCREMENT for table `banks`
 --
 ALTER TABLE `banks`
-  MODIFY `bankid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `bankid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `users_balance`
 --
 ALTER TABLE `users_balance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `user_roles`
 --
 ALTER TABLE `user_roles`
-  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

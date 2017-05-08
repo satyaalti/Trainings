@@ -19,12 +19,13 @@
      </tr>  
      <tr>  
       <td>Password:</td>  
-      <td><form:input path="password" /></td>  
+      <td><form:input type="password" path="password" /></td>  
      </tr>  
      <tr>  
       <td> </td>  
       <td><input type="submit" /></td>  
-     </tr>  
+     </tr> 
+     <tr><td><a href="#" >Forgot Password</a> | </td><td>Click <a href="#">here</a> to Register</td></tr> 
     </table>  
    </form:form>  
   </div>  
