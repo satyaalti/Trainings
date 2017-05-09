@@ -24,7 +24,7 @@ import com.samplecrud.model.Users;
 import com.samplecrud.model.UsersBalance;
 
 @Controller
-@RequestMapping("/my")
+@RequestMapping("/user")
 public class AccountController extends CommonController {
 	
 	@RequestMapping("/account") 
@@ -37,7 +37,7 @@ public class AccountController extends CommonController {
 		    	  
 		    	  ub.setTypeoftxn("M");
 		    	  this.usersBalanceService.addAmount(ub);
-		    	  return "redirect:/my/account/";
+		    	  return "redirect:/user/account/";
 		      }
 		      else if(request.getParameter("withdrawbalancebtn") != null &&  request.getParameter("withdrawbalancebtn").equals("Submit")) {
 		    	    ub.setTypeoftxn("W");
@@ -49,7 +49,7 @@ public class AccountController extends CommonController {
 					}
 				    
 				    this.usersBalanceService.withdrawAmount(ub);
-				    return "redirect:/my/account/";
+				    return "redirect:/user/account/";
 				    
 		      }
 		     
@@ -81,7 +81,7 @@ public class AccountController extends CommonController {
 		
 		model.addAttribute("user", user);
 		model.addAttribute("balance", balance);
-		return "account";
+		return "useraccount";
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -136,12 +136,12 @@ public class AccountController extends CommonController {
 				ub.setTypeoftxn("T");
 				ub.setTransferid(fromuserid);
 				this.usersBalanceService.addAmount(ub);
-				return "redirect:/my/account"; 
+				return "redirect:/user/account"; 
 	        }
 		}
 		model.addAttribute("user", user);
 		model.addAttribute("errormsg", errormsg);
-		return "mytransfer";
+		return "usertransfer";
 	}
 	
 	@RequestMapping(value="/getbalance", method = {RequestMethod.POST}, produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -157,7 +157,7 @@ public class AccountController extends CommonController {
 	public String getbankuserslist(HttpServletRequest request) {
 		int fromid=Integer.parseInt(request.getParameter("fromid"));
 		Users user = this.userService.getUserById(fromid);
-		int bankid=user.getBankid();
+		int bankid = user.getBankid();
 		String banktype=request.getParameter("banktype");
 		
 		List<Users> userlist = this.usersBalanceService.getbankuserslist(fromid,bankid,banktype);

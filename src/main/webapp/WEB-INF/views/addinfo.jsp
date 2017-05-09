@@ -3,26 +3,9 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page session="false" %>
-
 <%@ include file="header.jsp" %>
-<title>Insert title here</title>
-
-<script>
-function validateWithdrawAmount() {
-	var total_bal = parseInt(document.getElementById("totalbalance").value);
-	var withdrawamount = parseInt(document.getElementById("withdrawamount").value);
-	if(total_bal < withdrawamount) {
-		alert("Insufficient balance. You can withdraw upto :" + total_bal + "/- only");
-		return false;
-	}
-	
-	return true;
-}
-</script>
-</head>
-<body>
 <div><h1 style="text-shadow: 2px 2px #FF0000" align=center> ${user.getFirstName()}'s balance</h1></div>
-<div><a href="<c:url value='/admin/list' />" >User List</a> | <a href="<c:url value='/admin/transfer' />" >Funds Transfer</a></div>
+<div><a href="<c:url value='/admin/userlist' />" >User List</a> | <a href="<c:url value='/admin/usertransfer' />" >Funds Transfer</a></div>
 <form name="addbalanceform" method="post">
  <input type="hidden"  
     name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />  

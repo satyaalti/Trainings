@@ -4,3 +4,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="_csrf" content="${_csrf.token}"/>
+<title>Funds Transfer</title>
+<script> var rooturl = "<c:url value='/' />"; </script>
+<script src="<c:url value="/resources/scripts/jquery-3.2.0.min.js" />"></script>
+<script src="<c:url value="/resources/scripts/myscripts.js" />"></script>
+</head>
+<body>
+<div><a href="<c:url value='/admin/userlist' />" >User List</a> | <a href="<c:url value="/admin/adduser"/>">Add User</a> | <a href="<c:url value='/admin/usertransfer' />" >Admin Funds Transfer</a> | | <a href="<c:url value='/user/transfer' />" >Funds Transfer</a></div>

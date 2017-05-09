@@ -4,18 +4,20 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.samplecrud.dao.UserDAO;
 import com.samplecrud.model.Users;
 import com.samplecrud.service.UserService;
 
+@Service
 public class UserServiceImpl implements UserService {
 	
 	private UserDAO userDAO;
 	
-	 @Autowired
-	 private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
@@ -25,7 +27,6 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public void addUser(Users u) {
 		u.setPassword(passwordEncoder.encode(u.getPassword()));
-		System.out.println(u.toString());
 		this.userDAO.addUser(u);
 	}
 
@@ -33,12 +34,11 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public void updateUser(Users u) {
 		u.setPassword(passwordEncoder.encode(u.getPassword()));
-		System.out.println(u.toString());
 		this.userDAO.updateUser(u);
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional
 	public List<Users> listUsers() {
 		return this.userDAO.listUsers();
 	}
@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public Users findByUserName(String username) {
 		// TODO Auto-generated method stub
 		return this.userDAO.findByUserName(username);

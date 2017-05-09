@@ -1,6 +1,7 @@
 package com.samplecrud.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -51,7 +52,7 @@ public class UserRole implements Serializable {
 		this.userId = userId;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)  
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)  
 	@JoinColumn(name = "userid", nullable = false, insertable=false, updatable=false)  
 	private Users user;
 

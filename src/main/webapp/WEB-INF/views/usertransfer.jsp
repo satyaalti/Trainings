@@ -4,16 +4,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page session="false" %>
 <%@ include file="header.jsp" %>
-
-<title>Funds Transfer</title>
-<script> var rooturl = "<c:url value='/' />"; </script>
-<script src="<c:url value="/resources/scripts/jquery-3.2.0.min.js" />"></script>
-<script src="<c:url value="/resources/scripts/myscripts.js" />"></script>
-</head>
-<body>
 <h1>Funds Transfer</h1>
 <h2> Hi ${user.getFirstName()} Your <span id="baldiv"></span></h2>
-<div><a href="<c:url value='/my/account' />">Back</a></div>
+<div><a href="<c:url value='/user/account' />">Back</a></div>
 <div style="color: red">${errormsg}</div>
 <form id="transferFrm" method="post">
  <input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />

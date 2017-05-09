@@ -4,14 +4,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="false" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-	<form action="<c:url value="/admin/add"/>" method="post">
+<%@ include file="header.jsp" %>
+	<form action="<c:url value="/admin/adduser"/>" method="post">
 	 <input type="hidden"  
     name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />  
 		 	<c:choose> 
@@ -51,7 +45,7 @@
 		        </select>
 			</td></tr>
 				<tr>
-					<td> <input type="button" name="cancel" value="Cancel" onclick="window.location.href='<c:url value="/admin/list"/>'" /></td>
+					<td> </td>
 					<td> <input type="submit" value="${!empty user.getUserid() ? 'Update' : 'Submit' }" name="submit" /></td>
 				</tr>
 		</table>

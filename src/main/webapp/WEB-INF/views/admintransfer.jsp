@@ -4,13 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page session="false" %>
 <%@ include file="header.jsp" %>
-
-<title>Funds Transfer</title>
-<script> var rooturl = "<c:url value='/' />"; </script>
-<script src="<c:url value="/resources/scripts/jquery-3.2.0.min.js" />"></script>
-<script src="<c:url value="/resources/scripts/myscripts.js" />"></script>
-</head>
-<body>
 <h1>Funds Transfer</h1>
 <div><a href="<c:url value='/admin/list' />" >User List</a></div>
 <div style="color: red">${errormsg}</div>

@@ -19,9 +19,9 @@ import com.samplecrud.model.UsersBalance;
 
 @Controller
 @RequestMapping("/admin")
-public class UserBalanceController extends CommonController {
+public class AdminUserBalanceController extends CommonController {
 	
-	@RequestMapping("/balanceinfo/{userid}")
+	@RequestMapping("/userbalanceinfo/{userid}")
     public String addAmount(@PathVariable("userid") int userid, HttpServletRequest request, @ModelAttribute("users_balance") UsersBalance ub, Model model){
 		
 		try{
@@ -29,7 +29,7 @@ public class UserBalanceController extends CommonController {
 		    	  
 		    	  ub.setTypeoftxn("M");
 		    	  this.usersBalanceService.addAmount(ub);
-		    	  return "redirect:/admin/balanceinfo/"+userid;
+		    	  return "redirect:/admin/userbalanceinfo/"+userid;
 		      }
 		      else if(request.getParameter("withdrawbalancebtn") != null &&  request.getParameter("withdrawbalancebtn").equals("Submit")) {
 		    	    ub.setTypeoftxn("W");
@@ -41,7 +41,7 @@ public class UserBalanceController extends CommonController {
 					}
 				    
 				    this.usersBalanceService.withdrawAmount(ub);
-				    return "redirect:/admin/balanceinfo/"+userid;
+				    return "redirect:/admin/userbalanceinfo/"+userid;
 				    
 		      }
 		     
@@ -75,7 +75,7 @@ public class UserBalanceController extends CommonController {
     }
 	
 	@SuppressWarnings("rawtypes")
-	@RequestMapping(value="/transfer", method = {RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value="/usertransfer", method = {RequestMethod.POST, RequestMethod.GET})
 	public String transfer(Model model,HttpServletRequest request) {
 		String errormsg = "";
 		
@@ -125,12 +125,12 @@ public class UserBalanceController extends CommonController {
 				ub.setTypeoftxn("T");
 				ub.setTransferid(fromuserid);
 				this.usersBalanceService.addAmount(ub);
-				return "redirect:/admin/list"; 
+				return "redirect:/admin/userlist"; 
 	        }
 		}
 		model.addAttribute("errormsg", errormsg);
 		model.addAttribute("userlist",this.userService.listUsers());
-		return "transfer";
+		return "admintransfer";
 	}
 	
 }

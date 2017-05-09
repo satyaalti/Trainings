@@ -1,11 +1,13 @@
 package com.samplecrud.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 //import org.hibernate.criterion.Restrictions;
+
 
 import com.samplecrud.dao.BankDAO;
 import com.samplecrud.model.Bank;
@@ -21,11 +23,20 @@ public class BankDAOImpl implements BankDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Bank>  listOfBanks() {
-		Session session = this.sessionFactory.getCurrentSession();
-		List<Bank> banks = session.createCriteria(Bank.class)
-				//.add(Restrictions.eq("bankid", bankid))
-				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-		System.out.println("bankdao"+ banks.toString());
+		Session session = this.sessionFactory.openSession();
+		List<Bank> banks = new ArrayList<Bank>();
+		try {
+			banks = session.createCriteria(Bank.class)
+					//.add(Restrictions.eq("bankid", bankid))
+					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			session.flush();
+			session.close();
+		}
 		return banks;
 		    
 	}

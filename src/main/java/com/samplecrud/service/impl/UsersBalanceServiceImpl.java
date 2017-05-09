@@ -40,13 +40,13 @@ public class UsersBalanceServiceImpl implements UsersBalanceService {
 	@Override
 	@Transactional
 	public String getbalance(int userid){
-		 return this.usersBalanceDAO. getbalance(userid);
+		 return this.usersBalanceDAO.getbalance(userid);
 	}
 	
 	@Override
 	@Transactional
 	public int rowCount(int userid){
-		 return this.usersBalanceDAO. rowCount(userid);
+		 return this.usersBalanceDAO.rowCount(userid);
 	}
 	@Override
 	@Transactional

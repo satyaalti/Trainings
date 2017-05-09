@@ -19,7 +19,7 @@ public class LoginController extends CommonController {
 	@RequestMapping(value = "/" )  
 	public String getUserDefault(HttpServletRequest request) { 
 		this.setLoggedInUser(request);
-		return "redirect:/my/account";
+		return "redirect:/user/account";
 	}  
 	
 	@RequestMapping(value = "/home" )  

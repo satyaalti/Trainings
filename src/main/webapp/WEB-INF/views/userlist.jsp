@@ -2,15 +2,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="false" %>
-
 <%@ include file="header.jsp" %>
-<title>Insert title here</title>
-</head>
-<body>
-<a href="<c:url value="/admin/add"/>">add user</a>
-<a href="<c:url value="/admin/transfer"/>">transfer</a>
 <c:out value="${sessionScope.total}" />	
-
 <h3>Users List</h3>
 <c:choose>
 <c:when test="${!empty userlist}">
@@ -29,9 +22,9 @@
 			<td>${user.getLastName()}</td>
 			<td>${user.getEmail() }</td>
 			<td>${user.getBank().getBankname()}</td>
-			<td><a href="<c:url value='/admin/edit/${user.getUserid()}' />" >edit</a></td>
-			<td><a href="<c:url value='/admin/remove/${user.getUserid()}' />" >Remove</a></td>
-			<td><a href="<c:url value='/admin/balanceinfo/${user.getUserid()}' />" >Account</a></td>
+			<td><a href="<c:url value='/admin/edituser/${user.getUserid()}' />" >edit</a></td>
+			<td><a href="<c:url value='/admin/removeuser/${user.getUserid()}' />" >Remove</a></td>
+			<td><a href="<c:url value='/admin/userbalanceinfo/${user.getUserid()}' />" >Account</a></td>
 			
 	</tr>
 	</c:forEach>

@@ -18,9 +18,9 @@ import com.samplecrud.model.Users;
 
 @Controller
 @RequestMapping("/admin")
-public class UserController extends CommonController {
+public class AdminUserController extends CommonController {
 	
-	@RequestMapping("/list") 
+	@RequestMapping("/userlist") 
 	public  String UsersList(Model model) {
 		String errorMsg = "";
 		List<Users>  userlist = new ArrayList<Users>();
@@ -38,10 +38,10 @@ public class UserController extends CommonController {
 		}
 		
 		model.addAttribute("errorMsg",errorMsg);
-		return "list";
+		return "userlist";
 	}
 	
-	@RequestMapping(value="/add", method = {RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value="/adduser", method = {RequestMethod.POST, RequestMethod.GET})
 	public String addUsers(HttpServletRequest request, @ModelAttribute("users") Users u, Model model) {
 		try{
 		      if(request.getParameter("submit").equals("Submit")){
@@ -51,7 +51,7 @@ public class UserController extends CommonController {
 		      else if(request.getParameter("submit").equals("Update")) {
 		    	  this.userService.updateUser(u);
 		      }
-		      return "redirect:/admin/list";
+		      return "redirect:/admin/userlist";
 		}
 		catch(Exception e)
 		{
@@ -59,10 +59,10 @@ public class UserController extends CommonController {
 		}
 		
 		model.addAttribute("bankslist",this.bankService.listOfBanks());
-		return "add";
+		return "adduser";
 	}
 	
-	@RequestMapping("/edit/{id}")
+	@RequestMapping("/edituser/{id}")
     public String editPerson(@PathVariable("id") int id, Model model){
 		
 		Users user = this.userService.getUserById(id);
@@ -71,13 +71,13 @@ public class UserController extends CommonController {
         List<Bank> bankslist = new ArrayList<Bank>();
 		bankslist = this.bankService.listOfBanks();
 		model.addAttribute("bankslist",bankslist);
-        return "add";
+        return "adduser";
     }
 	
-	@RequestMapping(value="/remove/{id}" ,method = {RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value="/removeuser/{id}" ,method = {RequestMethod.POST,RequestMethod.GET})
 	public String removeUser(@PathVariable("id") int id){
 	    this.userService.removeUser(id);
-        return "redirect:/admin/list";
+        return "redirect:/admin/userlist";
     }
 	
 }
