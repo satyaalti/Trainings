@@ -13,6 +13,12 @@ import javax.persistence.*;
 @Table(name="user_roles")
 @NamedQuery(name="UserRole.findAll", query="SELECT u FROM UserRole u")
 public class UserRole implements Serializable {
+	@Override
+	public String toString() {
+		return "UserRole [roleId=" + roleId + ", role=" + role + ", userId="
+				+ userId +  "]";
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	@Id

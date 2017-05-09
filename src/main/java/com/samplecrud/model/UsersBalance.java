@@ -54,7 +54,7 @@ public class UsersBalance implements Serializable {
 	@Override
 	public String toString() {
 		return "UsersBalance [id=" + id + ", addamount=" + addamount + ", date=" + date + ", userid=" + userid
-				+ ", withdrawamount=" + withdrawamount + ", user=" + user + "]";
+				+ ", withdrawamount=" + withdrawamount + "]";
 	}
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)

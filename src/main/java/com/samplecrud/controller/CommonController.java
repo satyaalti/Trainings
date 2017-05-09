@@ -68,6 +68,7 @@ public class CommonController {
 			this.setLoggedInUser(request);
 			user = (Users) request.getSession().getAttribute("LOGGED_IN_USER");
 		}
+		System.out.println(user.toString());
 		return user;
 	}
 }

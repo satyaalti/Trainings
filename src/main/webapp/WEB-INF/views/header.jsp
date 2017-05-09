@@ -10,4 +10,9 @@
 <script src="<c:url value="/resources/scripts/myscripts.js" />"></script>
 </head>
 <body>
-<div><a href="<c:url value='/admin/userlist' />" >User List</a> | <a href="<c:url value="/admin/adduser"/>">Add User</a> | <a href="<c:url value='/admin/usertransfer' />" >Admin Funds Transfer</a> | | <a href="<c:url value='/user/transfer' />" >Funds Transfer</a></div>
+
+<div><c:if test="${user.getUserRole().size() == 2 }">
+	<a href="<c:url value='/admin/userlist' />" >User List</a> | 
+	<a href="<c:url value="/admin/adduser"/>">Add User</a> | 
+	<a href="<c:url value='/admin/usertransfer' />" >Admin Funds Transfer</a> | </c:if>
+	<a href="<c:url value='/user/transfer' />" >Funds Transfer</a></div>
