@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 //import org.hibernate.criterion.Restrictions;
 
 
+
 import com.samplecrud.dao.BankDAO;
 import com.samplecrud.model.Bank;
 
@@ -29,15 +30,17 @@ public class BankDAOImpl implements BankDAO {
 			banks = session.createCriteria(Bank.class)
 					//.add(Restrictions.eq("bankid", bankid))
 					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+			return banks;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			throw new ExceptionInInitializerError(e);
 		}
 		finally{
 			session.flush();
 			session.close();
 		}
-		return banks;
+		
 		    
 	}
 

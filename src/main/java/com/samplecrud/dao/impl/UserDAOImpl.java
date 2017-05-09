@@ -23,21 +23,20 @@ public class UserDAOImpl implements UserDAO {
 	
 	private SessionFactory sessionFactory;
 	
-	private Session session;
-	
 	public void setSessionFactory(SessionFactory sf){
 		this.sessionFactory = sf;
 	}
 	
 	@Override
 	public void addUser(Users  u) {
+		Session session = this.sessionFactory.openSession();
 		try {
-			session = this.sessionFactory.openSession();
 			session.persist(u);
 			logger.info("user saved successfully, user Details="+u);
 		}
 		catch(HibernateException hbe) {
 			hbe.printStackTrace();
+			throw new ExceptionInInitializerError(hbe);
 		} 
 		finally {
 			if(session.isOpen()){
@@ -49,13 +48,14 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Override
 	public void updateUser(Users u) {
+		Session session = this.sessionFactory.openSession();
 		try {
-			session = this.sessionFactory.openSession();
 			session.update(u);
 			logger.info("User updated successfully, user Details="+u);
 		}
 		catch(HibernateException hbe) {
 			hbe.printStackTrace();
+			throw new ExceptionInInitializerError(hbe);
 		} 
 		finally {
 			if(session.isOpen()){
@@ -67,10 +67,9 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Override
 	public List<Users> listUsers() {
-		
+		Session session = this.sessionFactory.openSession();
 		List<Users> usersList = new ArrayList<Users>();
 		try {
-			session = this.sessionFactory.openSession();
 			usersList = session.createCriteria(Users.class)  
 				      .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)  
 				      .list();
@@ -78,6 +77,7 @@ public class UserDAOImpl implements UserDAO {
 		}
 		catch(HibernateException hbe) {
 			hbe.printStackTrace();
+			throw new ExceptionInInitializerError(hbe);
 		} 
 		finally {
 			if(session.isOpen()){
@@ -90,22 +90,28 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Override
 	public Users getUserById(int id) {
-		Users u = new Users();
 		Session session = this.sessionFactory.openSession();
 		try {
-			u = (Users) session.load(Users.class, new Integer(id));
+			return (Users) session.load(Users.class, new Integer(id));
 		}
 		catch(HibernateException hbe) {
 			hbe.printStackTrace();
-		} 
-		return u;
+			throw new ExceptionInInitializerError(hbe);
+		}
+		/*finally{
+			if(session.isOpen()){
+				session.flush();
+				session.close();
+			}
+		}*/
 	}
 
 	@Override
 	public void removeUser(int id) {
-		Users u = new Users();
+		
+		Session session = this.sessionFactory.openSession();
 		try {
-			session = this.sessionFactory.openSession();
+			Users u = new Users();
 			u = (Users) session.load(Users.class, new Integer(id));/////
 			if(null != u){
 				session.delete(u);
@@ -114,6 +120,7 @@ public class UserDAOImpl implements UserDAO {
 		}
 		catch(HibernateException hbe) {
 			hbe.printStackTrace();
+			throw new ExceptionInInitializerError(hbe);
 		} 
 		finally {
 			if(session.isOpen()){
@@ -124,10 +131,11 @@ public class UserDAOImpl implements UserDAO {
 	}
 	
 	@Override
-	public Users findByUserName(String username) {  
+	public Users findByUserName(String username) { 
+		Session session = this.sessionFactory.openSession();
 		Users user = null;
 		try {
-			session = this.sessionFactory.openSession();
+			
 			Transaction tx = null;
 			tx = session.getTransaction();  
 			session.beginTransaction(); 
@@ -139,6 +147,7 @@ public class UserDAOImpl implements UserDAO {
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			throw new ExceptionInInitializerError(e);
 		}
 		finally {
 			if(session.isOpen()){

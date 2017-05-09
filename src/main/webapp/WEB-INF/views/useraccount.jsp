@@ -5,8 +5,7 @@
 <%@ include file="header.jsp" %>
 <div><h1 style="text-shadow: 2px 2px #FF0000" align=center> ${user.getFirstName()}'s Account Information</h1></div>
 <form name="addbalanceform" method="post">
- <input type="hidden"  
-    name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />  
+ <input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />  
 		<c:choose> 
 	  				<c:when test="${!empty user.getUserid()}">
 						<input type="hidden" name="userid" value="${user.getUserid()}">
@@ -27,8 +26,7 @@
 </form>
 <br/>
 <form name="withbalanceform" method="post" onsubmit="javascript:return validateWithdrawAmount();">
- <input type="hidden"  
-    name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />  
+ <input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />  
 	<c:choose> 
 	  				<c:when test="${!empty user.getUserid()}">
 						<input type="hidden" name="userid" value="${user.getUserid()}">

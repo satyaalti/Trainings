@@ -39,6 +39,7 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 		}
 		catch(HibernateException hbe) {
 			hbe.printStackTrace();
+			throw new ExceptionInInitializerError(hbe);
 		} 
 		finally {
 			if(session.isOpen()){
@@ -56,6 +57,7 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 		}
 		catch(HibernateException hbe) {
 			hbe.printStackTrace();
+			throw new ExceptionInInitializerError(hbe);
 		} 
 		finally {
 			if(session.isOpen()){
@@ -76,9 +78,11 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 					 					.add(Restrictions.eq("userid", userid));
 			 criteria.addOrder(Order.desc("date"));
 			 ub = criteria.list();
+			 return ub;
 		 }
 		 catch(HibernateException hbe) {
 			 hbe.printStackTrace();
+			 throw new ExceptionInInitializerError(hbe);
 		 } 
 		 finally {
 		 	if(session.isOpen()){
@@ -86,7 +90,6 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 				session.close();
 			}
 		}
-		return ub;
 	}
 	
 	
@@ -108,10 +111,12 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 			
 			List list = criteria.list();
 			bal = list.get(0).toString();
+			return bal;
 		}
 		catch (NullPointerException e) {
 			System.out.println("No records found");
 			e.printStackTrace();
+			throw new ExceptionInInitializerError(e);
 		}
 		finally {
 		 	if(session.isOpen()){
@@ -119,9 +124,6 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 				session.close();
 			}
 		}
-
-		return bal;
-	    
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -142,9 +144,11 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 			}
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			result = criteria.list();
+			return result;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			throw new ExceptionInInitializerError(e);
 		}
 		finally {
 		 	if(session.isOpen()){
@@ -153,7 +157,7 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 			}
 		}
 
-		return result;
+		
 	}
 
 	@Override
@@ -175,10 +179,11 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 			criteria.setProjection(Projections.rowCount());
 			Long count = (Long) criteria.uniqueResult();
 			cnt = count.intValue();
-			
+			return cnt;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			throw new ExceptionInInitializerError(e);
 		}
 		finally {
 		 	if(session.isOpen()){
@@ -186,16 +191,6 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 				session.close();
 			}
 		}	
-		return cnt;
+		
 	}
 }
-		
-	
-
- 
-
-
-
-
-
-

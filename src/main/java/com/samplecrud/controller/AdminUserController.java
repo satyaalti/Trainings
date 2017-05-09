@@ -44,14 +44,16 @@ public class AdminUserController extends CommonController {
 	@RequestMapping(value="/adduser", method = {RequestMethod.POST, RequestMethod.GET})
 	public String addUsers(HttpServletRequest request, @ModelAttribute("users") Users u, Model model) {
 		try{
-		      if(request.getParameter("submit").equals("Submit")){
-		    	  //new person, add it
-		    	  this.userService.addUser(u);
-		      }
-		      else if(request.getParameter("submit").equals("Update")) {
-		    	  this.userService.updateUser(u);
-		      }
-		      return "redirect:/admin/userlist";
+			  if(request.getParameter("submit") != null) {
+			      if( request.getParameter("submit").equals("Submit")){
+			    	  //new person, add itrequest.getParameter("submit") != null &&
+			    	  this.userService.addUser(u);
+			      }
+			      else if(request.getParameter("submit") != null && request.getParameter("submit").equals("Update")) {
+			    	  this.userService.updateUser(u);
+			      }
+			      return "redirect:/admin/userlist";
+			  }
 		}
 		catch(Exception e)
 		{

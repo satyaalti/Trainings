@@ -13,8 +13,10 @@
 <body>
 
 <c:set var="role" value="${sessionScope['LOGGED_IN_USER_ROLE']}" />
-<div><c:if test="${role == 'ROLE_ADMIN'}">
+<div>
+	<a href="<c:url value='/user/account' />" >Home</a> | 
+	<c:if test="${role == 'ROLE_ADMIN'}">
 	<a href="<c:url value='/admin/userlist' />" >User List</a> | 
-	<a href="<c:url value="/admin/adduser"/>">Add User</a> | 
+	<a href="<c:url value="/admin/adduser" />">Add User</a> | 
 	<a href="<c:url value='/admin/usertransfer' />" >Admin Funds Transfer</a> | </c:if>
 	<a href="<c:url value='/user/transfer' />" >Funds Transfer</a></div>

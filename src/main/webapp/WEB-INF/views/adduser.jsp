@@ -5,8 +5,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ include file="header.jsp" %>
 	<form action="<c:url value="/admin/adduser"/>" method="post">
-	 <input type="hidden"  
-    name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />  
+	 <input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />  
 		 	<c:choose> 
   				<c:when test="${!empty user.getUserid()}">
 					<input type="hidden" name="userid" value="${user.getUserid()}">
