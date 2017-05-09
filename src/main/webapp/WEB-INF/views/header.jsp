@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<div><c:if test="${user.getUserRole().size() == 2 }">
+<div><c:if test="${user.getUserRole().size() == 1}">
 	<a href="<c:url value='/admin/userlist' />" >User List</a> | 
 	<a href="<c:url value="/admin/adduser"/>">Add User</a> | 
 	<a href="<c:url value='/admin/usertransfer' />" >Admin Funds Transfer</a> | </c:if>

@@ -1,5 +1,8 @@
 package com.samplecrud.controller;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.samplecrud.model.UserRole;
 import com.samplecrud.model.Users;
 import com.samplecrud.service.BankService;
 import com.samplecrud.service.UserService;
@@ -52,6 +56,14 @@ public class CommonController {
 				   
 				   if(!username.isEmpty()) {
 					   user = this.userService.findByUserName(username);
+					   Set<UserRole> urs = new HashSet<UserRole>();
+					   for(UserRole ur: user.getUserRole()) {
+						   if(ur.getRole().equals("ROLE_ADMIN")) {
+							   urs.add(ur);
+							   break;
+						   }
+					   }
+					   user.setUserRole(urs);
 					   request.getSession().setAttribute("LOGGED_IN_USER", user);
 				   }
 			  }  
