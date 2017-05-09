@@ -2,7 +2,6 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page session="false" %>
 <%@ include file="header.jsp" %>
 <div><h1 style="text-shadow: 2px 2px #FF0000" align=center> ${user.getFirstName()}'s Account Information</h1></div>
 <form name="addbalanceform" method="post">

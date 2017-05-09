@@ -2,7 +2,6 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page session="false" %>
 <%@ include file="header.jsp" %>
 <div><h1 style="text-shadow: 2px 2px #FF0000" align=center> ${user.getFirstName()}'s balance</h1></div>
 <div><a href="<c:url value='/admin/userlist' />" >User List</a> | <a href="<c:url value='/admin/usertransfer' />" >Funds Transfer</a></div>
