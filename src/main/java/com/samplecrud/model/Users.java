@@ -103,7 +103,7 @@ public class Users implements Serializable {
 		this.usersBalance = usersBalance;
 	}
 	
-	@ManyToOne(cascade = CascadeType.ALL,fetch=FetchType.EAGER, optional = true)
+	@ManyToOne(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinColumn(name="bankid", insertable=false, updatable=false)
 	private Bank bank;
 	

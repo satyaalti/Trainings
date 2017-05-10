@@ -33,7 +33,7 @@ public class AdminUserBalanceController extends CommonController {
 		      }
 		      else if(request.getParameter("withdrawbalancebtn") != null &&  request.getParameter("withdrawbalancebtn").equals("Submit")) {
 		    	    ub.setTypeoftxn("W");
-		    	    int rowCount = this.usersBalanceService.rowCount(userid);
+		    	    int rowCount = this.usersBalanceService.trnsactionsCountPerDay(userid);
 
 		    	    System.out.println(rowCount );
 				    if(rowCount > Variables.WITHDRAW_COUNT) {
@@ -103,7 +103,7 @@ public class AdminUserBalanceController extends CommonController {
 			}   
 			           
 			double withdrawAmount = transferamount;
-			int rowCount = this.usersBalanceService.rowCount(fromuserid);
+			int rowCount = this.usersBalanceService.trnsactionsCountPerDay(fromuserid);
 			
 			if(rowCount > Variables.WITHDRAW_COUNT) {
 				withdrawAmount = transferamount + 10;

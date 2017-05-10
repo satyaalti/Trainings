@@ -20,141 +20,102 @@ import com.samplecrud.model.Users;
 @SuppressWarnings("unchecked")
 public class UserDAOImpl implements UserDAO {
 	private static final Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
-	
 	private SessionFactory sessionFactory;
-	
 	public void setSessionFactory(SessionFactory sf){
 		this.sessionFactory = sf;
 	}
 	
 	@Override
 	public void addUser(Users  u) {
-		Session session = this.sessionFactory.openSession();
-		try {
-			session.persist(u);
+		try (CloseableSession session = new CloseableSession(this.sessionFactory.openSession())) {
+			session.delegate().persist(u);
 			logger.info("user saved successfully, user Details="+u);
 		}
 		catch(HibernateException hbe) {
-			hbe.printStackTrace();
+			logger.info("Occured Exception while adding user");
 			throw new ExceptionInInitializerError(hbe);
 		} 
-		finally {
-			if(session.isOpen()){
-				session.flush();
-				session.close();
-			}
-		}
 	}
 	
 	@Override
 	public void updateUser(Users u) {
-		Session session = this.sessionFactory.openSession();
-		try {
-			session.update(u);
+		try (CloseableSession session = new CloseableSession(this.sessionFactory.openSession())) {
+			session.delegate().update(u);
 			logger.info("User updated successfully, user Details="+u);
 		}
 		catch(HibernateException hbe) {
-			hbe.printStackTrace();
+			logger.info("Occured Exception while updating user");
 			throw new ExceptionInInitializerError(hbe);
 		} 
-		finally {
-			if(session.isOpen()){
-				session.flush();
-				session.close();
-			}
-		}
 	}
 	
 	@Override
 	public List<Users> listUsers() {
-		Session session = this.sessionFactory.openSession();
 		List<Users> usersList = new ArrayList<Users>();
-		try {
-			usersList = session.createCriteria(Users.class)  
+		try (CloseableSession session = new CloseableSession(this.sessionFactory.openSession())) {
+			usersList = session.delegate().createCriteria(Users.class)  
 				      .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)  
 				      .list();
-			
+			logger.info("Fetched User list Successfully");
 		}
 		catch(HibernateException hbe) {
-			hbe.printStackTrace();
+			logger.info("Occured Exception while fetching User list");
 			throw new ExceptionInInitializerError(hbe);
 		} 
-		finally {
-			if(session.isOpen()){
-				session.flush();
-				session.close();
-			}
-		}
 		return usersList;
 	}
 	
 	@Override
 	public Users getUserById(int id) {
-		Session session = this.sessionFactory.openSession();
-		try {
-			return (Users) session.load(Users.class, new Integer(id));
+		Users u = new Users();
+		try (CloseableSession session = new CloseableSession(this.sessionFactory.openSession())) {
+			u = (Users) session.delegate().load(Users.class, new Integer(id));
+			logger.info("Successfully fetched user list by Id");
 		}
 		catch(HibernateException hbe) {
-			hbe.printStackTrace();
+			logger.info("Exception occured while trying fetch user list by Id");
 			throw new ExceptionInInitializerError(hbe);
 		}
-		/*finally{
-			if(session.isOpen()){
-				session.flush();
-				session.close();
-			}
-		}*/
+		return u;
 	}
 
 	@Override
 	public void removeUser(int id) {
-		
-		Session session = this.sessionFactory.openSession();
-		try {
+		try (CloseableSession session = new CloseableSession(this.sessionFactory.openSession())) {
 			Users u = new Users();
-			u = (Users) session.load(Users.class, new Integer(id));/////
+			Session sessionO = session.delegate();
+			u = (Users) sessionO.load(Users.class, new Integer(id));/////
 			if(null != u){
-				session.delete(u);
-				logger.info("Person deleted successfully");
+				sessionO.delete(u);
+				logger.info("User deleted successfully");
 			}
 		}
 		catch(HibernateException hbe) {
-			hbe.printStackTrace();
+			logger.info("Exception occured while deleting a user");
 			throw new ExceptionInInitializerError(hbe);
 		} 
-		finally {
-			if(session.isOpen()){
-				session.flush();
-				session.close();
-			}
-		}
 	}
 	
 	@Override
 	public Users findByUserName(String username) { 
-		Session session = this.sessionFactory.openSession();
-		Users user = null;
-		try {
-			
+		Users user = new Users();
+		try (CloseableSession session = new CloseableSession(this.sessionFactory.openSession())) {
+			Session sessionO = session.delegate();
 			Transaction tx = null;
-			tx = session.getTransaction();  
-			session.beginTransaction(); 
-			Criteria criteria = session.createCriteria(Users.class)
+			tx = sessionO.getTransaction();  
+			sessionO.beginTransaction(); 
+			Criteria criteria = sessionO.createCriteria(Users.class)
 						.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 						.add(Restrictions.eq("username", username));
 			user = (Users) criteria.list().get(0);  
 			tx.commit();  
+			logger.info("Successfully fetched User by username");
+			
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			logger.info("Exception occured while trying to fetch User by username");
 			throw new ExceptionInInitializerError(e);
 		}
-		finally {
-			if(session.isOpen()){
-				session.flush();
-				session.close();
-			}
-		}
-		return user;  
+		return user;
 	 }  
 }

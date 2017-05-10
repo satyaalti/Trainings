@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
@@ -25,7 +24,6 @@ import com.samplecrud.model.UsersBalance;
 
 public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 	private static final Logger logger = LoggerFactory.getLogger(UsersBalanceDAOImpl.class);
-	
 	private SessionFactory sessionFactory;
 	public void setSessionFactory(SessionFactory sf){
 		this.sessionFactory = sf;
@@ -33,73 +31,53 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 	
 	@Override
 	public void addAmount(UsersBalance ub) {
-		Session session = this.sessionFactory.openSession();
-		try {
-			session.save(ub);
+		try (CloseableSession session = new CloseableSession(this.sessionFactory.openSession())) {
+			session.delegate().save(ub);
+			logger.info("Add Amount saved successfully");
 		}
 		catch(HibernateException hbe) {
-			hbe.printStackTrace();
+			logger.info("Exception occured while adding Amount");
 			throw new ExceptionInInitializerError(hbe);
 		} 
-		finally {
-			if(session.isOpen()){
-				session.flush();
-				session.close();
-			}
-		}
 	}
 	
 	@Override
 	public void withdrawAmount(UsersBalance ub){
-		Session session = this.sessionFactory.openSession();
-		try {
-			session.save(ub);
+		try (CloseableSession session = new CloseableSession(this.sessionFactory.openSession())) {
+			session.delegate().save(ub);
+			logger.info("Withdraw Amount saved successfully");
 		}
 		catch(HibernateException hbe) {
-			hbe.printStackTrace();
+			logger.info("Exception occured while withdraw Amount saved successfully");
 			throw new ExceptionInInitializerError(hbe);
 		} 
-		finally {
-			if(session.isOpen()){
-				session.flush();
-				session.close();
-			}
-		}
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UsersBalance> listUsersBalance(int userid){
-		 Session session = this.sessionFactory.openSession();
-		 List<UsersBalance> ub = new ArrayList<UsersBalance>();
-		 try {
-			 Criteria criteria = session.createCriteria(UsersBalance.class)
+		List<UsersBalance> ub = new ArrayList<UsersBalance>();
+		try (CloseableSession session = new CloseableSession(this.sessionFactory.openSession())) {
+			 Criteria criteria = session.delegate().createCriteria(UsersBalance.class)
 					 					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 					 					.add(Restrictions.eq("userid", userid));
 			 criteria.addOrder(Order.desc("date"));
 			 ub = criteria.list();
-			 return ub;
-		 }
-		 catch(HibernateException hbe) {
-			 hbe.printStackTrace();
-			 throw new ExceptionInInitializerError(hbe);
-		 } 
-		 finally {
-		 	if(session.isOpen()){
-				session.flush();
-				session.close();
-			}
+			 logger.info("Success fully fetched User Balance list");
 		}
+		catch(HibernateException hbe) {
+			 logger.info("Exception occured while fetching User Balance list");
+			 throw new ExceptionInInitializerError(hbe);
+		} 
+		return ub;
 	}
 	
 	
-	@SuppressWarnings("rawtypes")
 	@Override
 	public String getbalance(int userid) {
 		String bal = "0";
-		Session session = this.sessionFactory.openSession();
-		try {
-			Criteria criteria = session.createCriteria(UsersBalance.class)
+		try (CloseableSession session = new CloseableSession(this.sessionFactory.openSession())) {
+			Criteria criteria = session.delegate().createCriteria(UsersBalance.class)
 								.add(Restrictions.eq("userid", userid));
 			criteria.setProjection(Projections
 	                .projectionList()
@@ -108,31 +86,22 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 	                  new String[] { "total" },
 	                  new Type[] { StandardBasicTypes.DOUBLE }), "total"));
 			
-			
-			List list = criteria.list();
-			bal = list.get(0).toString();
-			return bal;
+			bal = criteria.list().get(0).toString();
+			logger.info("Successfully Fetched User Balance");
 		}
 		catch (NullPointerException e) {
-			System.out.println("No records found");
-			e.printStackTrace();
+			logger.info("Exception occured while fetching User Balance");
 			throw new ExceptionInInitializerError(e);
 		}
-		finally {
-		 	if(session.isOpen()){
-				session.flush();
-				session.close();
-			}
-		}
+		return bal;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Users> getbankuserslist(int userid,int bankid,String banktype) {
-		Session session = this.sessionFactory.openSession();
-		List<Users> result = new ArrayList<Users>();
-		try{
-			Criteria criteria = session.createCriteria(Users.class);
+		List<Users> us = new ArrayList<Users>();
+		try (CloseableSession session = new CloseableSession(this.sessionFactory.openSession())) {
+			Criteria criteria = session.delegate().createCriteria(Users.class);
 			if(banktype.equals("SB"))
 			{
 				criteria.add(Restrictions.ne("userid", userid));				 
@@ -140,38 +109,26 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 			}
 			else{
 				criteria.add(Restrictions.ne("bankid", bankid));
-						
 			}
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-			result = criteria.list();
-			return result;
+			us = criteria.list();
+			logger.info("Success fully fetched uses as per bank id");
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			logger.info("Exception occured while fetching User list as per the bank id");
 			throw new ExceptionInInitializerError(e);
 		}
-		finally {
-		 	if(session.isOpen()){
-				session.flush();
-				session.close();
-			}
-		}
-
-		
+		return us;
 	}
 
 	@Override
-	public int  rowCount(int userid) {
-		
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Date dateobj = new Date();
-		String current_date = df.format(dateobj);
+	public int  trnsactionsCountPerDay(int userid) {
 		int cnt = 0;
-		
-		Session session = this.sessionFactory.openSession();
-		
-		try {
-			Criteria criteria = session.createCriteria(UsersBalance.class)
+		try (CloseableSession session = new CloseableSession(this.sessionFactory.openSession())) {
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			Date dateobj = new Date();
+			String current_date = df.format(dateobj);
+			Criteria criteria = session.delegate().createCriteria(UsersBalance.class)
 								.add(Restrictions.eq("userid", userid))
 								.add(Restrictions.sqlRestriction("DATE_FORMAT(date, '%Y-%m-%d') = ?", current_date, StringType.INSTANCE))
 								.add(Restrictions.in("typeoftxn", new String[] { "W", "WT"}));
@@ -179,18 +136,12 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 			criteria.setProjection(Projections.rowCount());
 			Long count = (Long) criteria.uniqueResult();
 			cnt = count.intValue();
-			return cnt;
+			logger.info("Successfully Fetched transactions count per day");
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			logger.info("Exception occured while fetching transactions count per day");
 			throw new ExceptionInInitializerError(e);
 		}
-		finally {
-		 	if(session.isOpen()){
-				session.flush();
-				session.close();
-			}
-		}	
-		
+		return cnt;
 	}
 }

@@ -1,8 +1,6 @@
 package com.samplecrud.controller;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,7 +13,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.samplecrud.model.UserRole;
 import com.samplecrud.model.Users;
 import com.samplecrud.service.BankService;
 import com.samplecrud.service.UserService;

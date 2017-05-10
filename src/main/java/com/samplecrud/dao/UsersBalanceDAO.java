@@ -13,6 +13,6 @@ public interface UsersBalanceDAO {
 	public void withdrawAmount(UsersBalance ub);
 	public List<UsersBalance> listUsersBalance(int userid);
 	public String getbalance(int userid);
-	public int rowCount(int userid);
+	public int trnsactionsCountPerDay(int userid);
 	public List<Users> getbankuserslist(int userid,int bankid,String banktype);
 }

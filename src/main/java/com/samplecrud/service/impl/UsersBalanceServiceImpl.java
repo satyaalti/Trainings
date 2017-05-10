@@ -31,25 +31,25 @@ public class UsersBalanceServiceImpl implements UsersBalanceService {
 	}
 	
 	@Override
-	@Transactional
+	@Transactional(readOnly=true)
 	public List<UsersBalance> listUsersBalance(int userid){
 		return this.usersBalanceDAO.listUsersBalance(userid);
 		
 	}
 	
 	@Override
-	@Transactional
+	@Transactional(readOnly=true)
 	public String getbalance(int userid){
 		 return this.usersBalanceDAO.getbalance(userid);
 	}
 	
 	@Override
-	@Transactional
-	public int rowCount(int userid){
-		 return this.usersBalanceDAO.rowCount(userid);
+	@Transactional(readOnly=true)
+	public int trnsactionsCountPerDay(int userid){
+		 return this.usersBalanceDAO.trnsactionsCountPerDay(userid);
 	}
 	@Override
-	@Transactional
+	@Transactional(readOnly=true)
 	public List<Users> getbankuserslist(int userid,int bankid,String banktype){
 		 return this.usersBalanceDAO.getbankuserslist(userid,bankid,banktype);
 	}

@@ -41,7 +41,7 @@ public class AccountController extends CommonController {
 		      }
 		      else if(request.getParameter("withdrawbalancebtn") != null &&  request.getParameter("withdrawbalancebtn").equals("Submit")) {
 		    	    ub.setTypeoftxn("W");
-		    	    int rowCount = this.usersBalanceService.rowCount(user.getUserid());
+		    	    int rowCount = this.usersBalanceService.trnsactionsCountPerDay(user.getUserid());
 
 		    	    System.out.println(rowCount );
 				    if(rowCount > Variables.WITHDRAW_COUNT) {
@@ -114,7 +114,7 @@ public class AccountController extends CommonController {
 			}   
 			           
 			double withdrawAmount = transferamount;
-			int rowCount = this.usersBalanceService.rowCount(fromuserid);
+			int rowCount = this.usersBalanceService.trnsactionsCountPerDay(fromuserid);
 			
 			if(rowCount > Variables.WITHDRAW_COUNT) {
 				withdrawAmount = transferamount + 10;
@@ -167,5 +167,4 @@ public class AccountController extends CommonController {
 					.create();
 	    return gson.toJson(userlist);
 	}	
-	
 }

@@ -38,13 +38,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly=true)
 	public List<Users> listUsers() {
 		return this.userDAO.listUsers();
 	}
 	
 	@Override
-	@Transactional
+	@Transactional(readOnly=true)
 	public Users getUserById(int id) {
 		return this.userDAO.getUserById(id);
 	}
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly=true)
 	public Users findByUserName(String username) {
 		// TODO Auto-generated method stub
 		return this.userDAO.findByUserName(username);
