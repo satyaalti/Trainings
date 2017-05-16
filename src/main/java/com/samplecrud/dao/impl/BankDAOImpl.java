@@ -34,7 +34,6 @@ public class BankDAOImpl implements BankDAO {
 		}
 		catch(Exception e) {
 			logger.info("Exception occured while fetching Bank list");
-			e.printStackTrace();
 			throw new ExceptionInInitializerError(e);
 		}
 		return banks;

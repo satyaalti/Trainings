@@ -13,6 +13,7 @@
 		<th width="120">Last name</th>
 		<th width="60">email id</th>
 		<th>bank</th>
+		<th>Action</th>
 	</tr>
 	<c:forEach items="${userlist}" var="user">
 		<tr>
@@ -21,9 +22,12 @@
 			<td>${user.getLastName()}</td>
 			<td>${user.getEmail() }</td>
 			<td>${user.getBank().getBankname()}</td>
-			<td><a href="<c:url value='/admin/edituser/${user.getUserid()}' />" >edit</a></td>
-			<td><a href="<c:url value='/admin/removeuser/${user.getUserid()}' />" >Remove</a></td>
-			<td><a href="<c:url value='/admin/userbalanceinfo/${user.getUserid()}' />" >Account</a></td>
+			<td>
+				<a href="<c:url value='/admin/edituser/${user.getUserid()}' />" >Edit</a> |
+				<a href="<c:url value='/admin/removeuser/${user.getUserid()}' />" >Remove</a> |
+				<a href="<c:url value='/admin/userbalanceinfo/${user.getUserid()}' />" >Account</a> 
+			</td>
+			<%-- <td><a href="<c:url value='/admin/userbalanceinfo/${user.getUserid()}' />" >Enable</a></td> --%>
 			
 	</tr>
 	</c:forEach>

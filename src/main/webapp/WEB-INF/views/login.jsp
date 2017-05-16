@@ -25,7 +25,7 @@
       <td> </td>  
       <td><input type="submit" /></td>  
      </tr> 
-     <tr><td><a href="#" >Forgot Password</a> | </td><td>Click <a href="#">here</a> to Register</td></tr> 
+     <tr><td><a href="#" >Forgot Password</a> | </td><td>Click <a href="<c:url value="/register"/>">here</a> to Register</td></tr> 
     </table>  
    </form:form>  
   </div>  

@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * The persistent class for the users database table.
@@ -51,6 +52,17 @@ public class Users implements Serializable {
 	
 	private boolean  enabled;
 	
+	@Transient
+	private String cpassword;
+	
+	public String getCpassword() {
+		return cpassword;
+	}
+
+	public void setCpassword(String cpassword) {
+		this.cpassword = cpassword;
+	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -80,8 +92,7 @@ public class Users implements Serializable {
 		return "Users [userid=" + userid + ", email=" + email + ", firstName="
 				+ firstName + ", lastName=" + lastName + ", bankid=" + bankid
 				+ ", password=" + password + ", username=" + username
-				+ ", enabled=" + enabled + ", usersBalance=" + usersBalance
-				+ ", bank=" + bank + ", userRole=" + userRole + "]";
+				+ ", enabled=" + enabled + "]";
 	}
 
 	public int getBankid() {

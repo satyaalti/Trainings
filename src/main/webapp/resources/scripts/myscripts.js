@@ -85,6 +85,52 @@ $(document).ready(function(){
 		}
 		
 	 });
+	  
+	  $("#UserregisterForm").submit(function(event) {
+		  var to = $("#toaccount").val();
+			 var firstName = $("#firstName").val();
+			 var lastName = $("#lastName").val();
+			 var username = $("#username").val();
+			 var password = $("#password").val();
+			 var cpassword = $("#cpassword").val();
+			 var email = $("#email").val();
+			 var bankid = $("#bankid").val();
+			 
+			if(firstName == "") {
+				event.preventDefault();
+				alert("Please enter First Name");
+			}
+			else if(lastName == "" ) {
+				event.preventDefault();
+				alert("Please enter Last Name");
+			}
+			else if(username == "" ) {
+				event.preventDefault();
+				alert("Please enter User Name");
+			}
+			else if(password == "" ) {
+				event.preventDefault();
+				alert("Please enter Password");
+			}
+			else if(cpassword == "" ) {
+				event.preventDefault();
+				alert("Please enter your Password again");
+			}
+			else if(password != cpassword ) {
+				event.preventDefault();
+				alert("Passwords do not match");
+			}
+			else if(email == "" ) {
+				event.preventDefault();
+				alert("Please enter Email Address");
+			}
+			else if(bankid == 0 ) {
+				event.preventDefault();
+				alert("Please select your Bank");
+			}
+	  });
+	  
+	  
 	 
 	 $('input[name=banktype]').change(function(){
 		 getbankuserslist();

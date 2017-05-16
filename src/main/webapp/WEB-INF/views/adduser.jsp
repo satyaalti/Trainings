@@ -4,6 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ include file="header.jsp" %>
+<h1> Add/Edit User </h1> 
 	<form action="<c:url value="/admin/adduser"/>" method="post">
 	 <input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />  
 		 	<c:choose> 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.samplecrud.model.Users;
 
@@ -68,5 +69,22 @@ public class LoginController extends CommonController {
 		}
 		model.addAttribute("username", username);
 		return "403";
+	}
+	
+	@RequestMapping(value="/register", method = {RequestMethod.POST, RequestMethod.GET})
+	public String register(HttpServletRequest request, @ModelAttribute("users") Users u, Model model) {
+		try{
+			  if(request.getParameter("submit") != null && request.getParameter("submit").equals("Submit")) {
+			      this.userService.addUser(u);
+			      return "redirect:/login";
+			  }
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("bankslist",this.bankService.listOfBanks());
+		return "register";
 	}
 }  

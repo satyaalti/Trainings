@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.samplecrud.dao.UserDAO;
+import com.samplecrud.model.UserRole;
 import com.samplecrud.model.Users;
 
 
@@ -27,20 +28,41 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Override
 	public void addUser(Users  u) {
-		try (CloseableSession session = new CloseableSession(this.sessionFactory.openSession())) {
-			session.delegate().persist(u);
+		Transaction tx = null;
+		try (CloseableSession csession = new CloseableSession(this.sessionFactory.openSession())) {
+			Session session = csession.delegate();
+			u.setEnabled(true);
+			tx = session.getTransaction();  
+			session.beginTransaction(); 
+			session.persist(u);
+			
 			logger.info("user saved successfully, user Details="+u);
+			
+			int userId = u.getUserid();
+			UserRole ur = new UserRole();
+			ur.setUserId(userId);
+			ur.setRole("ROLE_USER");
+			session.persist(ur);
+			
+			logger.info("user role saved successfully, user role Details="+ur);
+			tx.commit();
 		}
 		catch(HibernateException hbe) {
-			logger.info("Occured Exception while adding user");
+			logger.info("Occured Exception while adding user and his role");
+			tx.rollback();
 			throw new ExceptionInInitializerError(hbe);
 		} 
 	}
 	
 	@Override
 	public void updateUser(Users u) {
-		try (CloseableSession session = new CloseableSession(this.sessionFactory.openSession())) {
-			session.delegate().update(u);
+		try (CloseableSession csession = new CloseableSession(this.sessionFactory.openSession())) {
+			Session session = csession.delegate();
+			Transaction tx = null;
+			tx = session.getTransaction();  
+			session.beginTransaction();
+			session.update(u);
+			tx.commit();
 			logger.info("User updated successfully, user Details="+u);
 		}
 		catch(HibernateException hbe) {

@@ -89,9 +89,9 @@ public class UsersBalanceDAOImpl  implements UsersBalanceDAO{
 			bal = criteria.list().get(0).toString();
 			logger.info("Successfully Fetched User Balance");
 		}
-		catch (NullPointerException e) {
+		catch (Exception e) {
 			logger.info("Exception occured while fetching User Balance");
-			throw new ExceptionInInitializerError(e);
+			//throw new ExceptionInInitializerError(e);
 		}
 		return bal;
 	}
