@@ -58,6 +58,7 @@ public class UsersBalance implements Serializable {
 	}
 
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@JoinColumn(name="userid", insertable=false, updatable=false)
 	private Users user;
 	
 	
