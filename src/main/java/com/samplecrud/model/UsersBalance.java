@@ -57,8 +57,7 @@ public class UsersBalance implements Serializable {
 				+ ", withdrawamount=" + withdrawamount + "]";
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinColumn(name="userid", insertable=false, updatable=false)
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
 	private Users user;
 	
 	

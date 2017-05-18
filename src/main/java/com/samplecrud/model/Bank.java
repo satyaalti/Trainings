@@ -39,7 +39,7 @@ public class Bank implements Serializable {
 		return "Bank [bankid=" + bankid + ", bankname=" + bankname + "]";
 	}
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "bank")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, mappedBy = "bank")
 	private Set<Users> user = new HashSet<Users>();
 		
 	public Set<Users> getUser() {

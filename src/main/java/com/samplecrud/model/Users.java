@@ -114,7 +114,7 @@ public class Users implements Serializable {
 		this.usersBalance = usersBalance;
 	}
 	
-	@ManyToOne(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.PERSIST,fetch=FetchType.EAGER)
 	@JoinColumn(name="bankid", insertable=false, updatable=false)
 	private Bank bank;
 	
@@ -162,7 +162,7 @@ public class Users implements Serializable {
 		this.lastName = lastName;
 	}	
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)  
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<UserRole> userRole = new HashSet<UserRole>();
 
 	public Set<UserRole> getUserRole() {

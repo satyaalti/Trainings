@@ -22,13 +22,13 @@ import com.samplecrud.model.Users;
 public class UserDAOImpl implements UserDAO {
 	private static final Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
 	private SessionFactory sessionFactory;
+	private Transaction tx = null;
 	public void setSessionFactory(SessionFactory sf){
 		this.sessionFactory = sf;
 	}
 	
 	@Override
 	public void addUser(Users  u) {
-		Transaction tx = null;
 		try (CloseableSession csession = new CloseableSession(this.sessionFactory.openSession())) {
 			Session session = csession.delegate();
 			u.setEnabled(true);
@@ -58,14 +58,15 @@ public class UserDAOImpl implements UserDAO {
 	public void updateUser(Users u) {
 		try (CloseableSession csession = new CloseableSession(this.sessionFactory.openSession())) {
 			Session session = csession.delegate();
-			Transaction tx = null;
 			tx = session.getTransaction();  
 			session.beginTransaction();
+			u.setEnabled(true);
 			session.update(u);
 			tx.commit();
 			logger.info("User updated successfully, user Details="+u);
 		}
 		catch(HibernateException hbe) {
+			tx.rollback();
 			logger.info("Occured Exception while updating user");
 			throw new ExceptionInInitializerError(hbe);
 		} 
@@ -103,16 +104,20 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void removeUser(int id) {
-		try (CloseableSession session = new CloseableSession(this.sessionFactory.openSession())) {
+		try (CloseableSession sessionO = new CloseableSession(this.sessionFactory.openSession())) {
 			Users u = new Users();
-			Session sessionO = session.delegate();
-			u = (Users) sessionO.load(Users.class, new Integer(id));/////
+			Session session = sessionO.delegate();
+			tx = session.getTransaction();  
+			session.beginTransaction();
+			u = (Users) session.load(Users.class, new Integer(id));/////
 			if(null != u){
-				sessionO.delete(u);
+				session.delete(u);
 				logger.info("User deleted successfully");
+				tx.commit();
 			}
 		}
 		catch(HibernateException hbe) {
+			tx.rollback();
 			logger.info("Exception occured while deleting a user");
 			throw new ExceptionInInitializerError(hbe);
 		} 

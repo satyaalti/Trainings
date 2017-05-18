@@ -20,6 +20,9 @@ public class LoginController extends CommonController {
 	@RequestMapping(value = "/" )  
 	public String getUserDefault(HttpServletRequest request) { 
 		this.setLoggedInUser(request);
+		String role =  request.getSession().getAttribute("LOGGED_IN_USER_ROLE").toString();
+		if(role.equals("ROLE_ADMIN"))
+			return "redirect:/admin/userlist";
 		return "redirect:/user/account";
 	}  
 	
@@ -44,14 +47,14 @@ public class LoginController extends CommonController {
 		return "login";  
 	} 
 	
-	@RequestMapping("/admin**")  
+	@RequestMapping("/admin")  
 	public String getAdminProfile() {  
-		return "admin";  
+		return "redirect:/admin/userlist"; 
 	} 
 	
-	@RequestMapping("/user**")  
+	@RequestMapping("/user")  
 	public String getUserProfile() {  
-		return "user";  
+		return "redirect:/user/account"; 
 	}  
 	
 	@RequestMapping("/403")  

@@ -21,7 +21,7 @@ import com.samplecrud.model.Users;
 public class AdminUserController extends CommonController {
 	
 	@RequestMapping("/userlist") 
-	public  String UsersList(Model model) {
+	public  String UsersList(Model model, HttpServletRequest request) {
 		String errorMsg = "";
 		List<Users>  userlist = new ArrayList<Users>();
 		try{
@@ -37,6 +37,7 @@ public class AdminUserController extends CommonController {
 			errorMsg = "connect to sql server";
 		}
 		
+		model.addAttribute("loggedInUser", this.getLoggedInUser(request));
 		model.addAttribute("errorMsg",errorMsg);
 		return "userlist";
 	}

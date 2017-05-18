@@ -24,7 +24,7 @@
 			<td>${user.getBank().getBankname()}</td>
 			<td>
 				<a href="<c:url value='/admin/edituser/${user.getUserid()}' />" >Edit</a> |
-				<a href="<c:url value='/admin/removeuser/${user.getUserid()}' />" >Remove</a> |
+				<c:if test="${loggedInUser.getUserid() != user.getUserid()}"><a href="<c:url value='/admin/removeuser/${user.getUserid()}' />" >Remove</a> | </c:if> 
 				<a href="<c:url value='/admin/userbalanceinfo/${user.getUserid()}' />" >Account</a> 
 			</td>
 			<%-- <td><a href="<c:url value='/admin/userbalanceinfo/${user.getUserid()}' />" >Enable</a></td> --%>
