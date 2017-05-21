@@ -33,7 +33,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void updateUser(Users u) {
-		u.setPassword(passwordEncoder.encode(u.getPassword()));
+		//System.out.println("before update pwd:"+u.getPassword());
+		if(u.isRequiredPwdEncrypt()) {
+			u.setPassword(passwordEncoder.encode(u.getPassword()));
+			//System.out.println("after update pwd:"+u.getPassword());
+		}
 		this.userDAO.updateUser(u);
 	}
 	

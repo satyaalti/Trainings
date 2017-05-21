@@ -84,6 +84,16 @@ $(document).ready(function(){
 		
 	 });
 	  
+	  $('#addUserForm').submit(function(){
+		  if($('#userid').val() != '') {
+			  if($('#password').val() != '')
+				  $('#requiredPwdEncrypt').val(true);
+			  else
+				  $('#password').val($('#cpassword').val());
+		  }
+	  });
+	  
+	  
 	  $("#UserregisterForm").submit(function(event) {
 		  var to = $("#toaccount").val();
 			 var firstName = $("#firstName").val();
@@ -150,5 +160,13 @@ $(document).ready(function(){
 		 $('#selectedid').val(this.id);
 		 $('[name="UserListForm"]').attr('action', rooturl+"admin/changeuserstatus");
 		 $('[name="UserListForm"]').submit();
+	 });
+	 
+	 $("#changepwd").click(function(){
+		 if($('#trpwd').is(':hidden')) {
+			$('#password').val('');
+		 }
+		 $("#trpwd").toggle(1000);
+		 
 	 });
 });

@@ -173,8 +173,18 @@ public class Users implements Serializable {
 		this.userRole = userRole;
 	} 
 	
-	 public boolean isEnabled() {  
-	  return this.enabled;  
-	 }  
+	public boolean isEnabled() {  
+		return this.enabled;  
+	} 
+	 
+	@Transient
+	private boolean requiredPwdEncrypt;
 
+	public boolean isRequiredPwdEncrypt() {
+		return requiredPwdEncrypt;
+	}
+
+	public void setRequiredPwdEncrypt(boolean requiredPwdEncrypt) {
+		this.requiredPwdEncrypt = requiredPwdEncrypt;
+	}
 }
