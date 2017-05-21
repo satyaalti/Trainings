@@ -36,11 +36,17 @@ public class UserServiceImpl implements UserService {
 		u.setPassword(passwordEncoder.encode(u.getPassword()));
 		this.userDAO.updateUser(u);
 	}
+	
+	@Override
+	@Transactional
+	public void changeUserStatus(Users u) {
+		this.userDAO.updateUser(u);
+	}
 
 	@Override
 	@Transactional(readOnly=true)
-	public List<Users> listUsers() {
-		return this.userDAO.listUsers();
+	public List<Users> listUsers(boolean enalbed) {
+		return this.userDAO.listUsers(enalbed);
 	}
 	
 	@Override

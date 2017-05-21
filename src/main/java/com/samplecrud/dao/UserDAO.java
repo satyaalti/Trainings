@@ -6,7 +6,7 @@ import com.samplecrud.model.Users;
 
 public interface UserDAO {
 
-	List<Users> listUsers();
+	List<Users> listUsers(boolean enalbed);
 	public void addUser(Users u);
 	public void updateUser(Users u);
 	public Users getUserById(int id);

@@ -129,7 +129,7 @@ public class AdminUserBalanceController extends CommonController {
 	        }
 		}
 		model.addAttribute("errormsg", errormsg);
-		model.addAttribute("userlist",this.userService.listUsers());
+		model.addAttribute("userlist",this.userService.listUsers(true));
 		return "admintransfer";
 	}
 	

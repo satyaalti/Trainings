@@ -60,7 +60,6 @@ public class UserDAOImpl implements UserDAO {
 			Session session = csession.delegate();
 			tx = session.getTransaction();  
 			session.beginTransaction();
-			u.setEnabled(true);
 			session.update(u);
 			tx.commit();
 			logger.info("User updated successfully, user Details="+u);
@@ -73,10 +72,11 @@ public class UserDAOImpl implements UserDAO {
 	}
 	
 	@Override
-	public List<Users> listUsers() {
+	public List<Users> listUsers(boolean enabled) {
 		List<Users> usersList = new ArrayList<Users>();
 		try (CloseableSession session = new CloseableSession(this.sessionFactory.openSession())) {
 			usersList = session.delegate().createCriteria(Users.class)  
+					  .add(Restrictions.eq("enabled", enabled))
 				      .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)  
 				      .list();
 			logger.info("Fetched User list Successfully");

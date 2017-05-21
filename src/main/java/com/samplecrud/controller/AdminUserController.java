@@ -20,12 +20,32 @@ import com.samplecrud.model.Users;
 @RequestMapping("/admin")
 public class AdminUserController extends CommonController {
 	
-	@RequestMapping("/userlist") 
-	public  String UsersList(Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/userlist/{enable}") 
+	public  String usersListByStatus(Model model, HttpServletRequest request, @PathVariable String enable) {
+		try{
+			boolean status = true;
+			if(enable != null && enable.equals("inactive"))
+				status = false;
+			this.userListCommon(model, request, status);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return "userlist";
+	}
+	
+	@RequestMapping(value = "/userlist") 
+	public  String defaultUsersList(Model model, HttpServletRequest request) {
+		this.userListCommon(model, request, true);
+		return "userlist";
+	}
+	
+	public void userListCommon(Model model, HttpServletRequest request, boolean enable) {
 		String errorMsg = "";
 		List<Users>  userlist = new ArrayList<Users>();
 		try{
-			userlist = this.userService.listUsers();
+			userlist = this.userService.listUsers(enable);
 			model.addAttribute("userlist",userlist);//used to retrieve the info from db and display to jsp
 			if(userlist.size() == 0)
 				errorMsg = "No results found";
@@ -36,10 +56,9 @@ public class AdminUserController extends CommonController {
 		catch(Exception e){
 			errorMsg = "connect to sql server";
 		}
-		
+		model.addAttribute("enable", enable);
 		model.addAttribute("loggedInUser", this.getLoggedInUser(request));
 		model.addAttribute("errorMsg",errorMsg);
-		return "userlist";
 	}
 	
 	@RequestMapping(value="/adduser", method = {RequestMethod.POST, RequestMethod.GET})
@@ -80,6 +99,15 @@ public class AdminUserController extends CommonController {
 	@RequestMapping(value="/removeuser/{id}" ,method = {RequestMethod.POST,RequestMethod.GET})
 	public String removeUser(@PathVariable("id") int id){
 	    this.userService.removeUser(id);
+        return "redirect:/admin/userlist";
+    }
+	
+	@RequestMapping(value="/changeuserstatus" , method=RequestMethod.POST)
+	public String changeUserStatus(HttpServletRequest request){
+		Users user = this.userService.getUserById(Integer.parseInt(request.getParameter("selectedid")));
+		System.out.println("enabled:"+request.getParameter("enable"));
+		user.setEnabled(!Boolean.parseBoolean(request.getParameter("enable")));
+		this.userService.changeUserStatus(user);
         return "redirect:/admin/userlist";
     }
 	

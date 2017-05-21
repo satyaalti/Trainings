@@ -6,7 +6,8 @@
 <%@ include file="header.jsp" %>
 <h1> Add/Edit User </h1> 
 	<form action="<c:url value="/admin/adduser"/>" method="post">
-	 <input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />  
+	 <input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" /> 
+	 <input type="hidden" name="enabled" value="${user.getEnabled()}"> 
 		 	<c:choose> 
   				<c:when test="${!empty user.getUserid()}">
 					<input type="hidden" name="userid" value="${user.getUserid()}">

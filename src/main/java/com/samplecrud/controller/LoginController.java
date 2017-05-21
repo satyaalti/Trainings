@@ -20,9 +20,13 @@ public class LoginController extends CommonController {
 	@RequestMapping(value = "/" )  
 	public String getUserDefault(HttpServletRequest request) { 
 		this.setLoggedInUser(request);
-		String role =  request.getSession().getAttribute("LOGGED_IN_USER_ROLE").toString();
-		if(role.equals("ROLE_ADMIN"))
-			return "redirect:/admin/userlist";
+		try {
+			String role =  request.getSession().getAttribute("LOGGED_IN_USER_ROLE").toString();
+			if(role.equals("ROLE_ADMIN"))
+				return "redirect:/admin/userlist";
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		return "redirect:/user/account";
 	}  
 	

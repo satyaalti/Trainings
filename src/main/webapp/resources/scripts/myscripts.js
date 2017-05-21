@@ -3,48 +3,47 @@ $(document).ready(function(){
 	var csrfToken = $("meta[name='_csrf']").attr("content");
     var csrfdata = {'X-CSRF-TOKEN': csrfToken};
   
-	  var getbalance = function() {
+	var getbalance = function() {
 		   
-		  var userid = $("#fromaccount").val();
-		  if (typeof userid != "undefined" ) {
-			  var postdata = {userid: userid};
+		var userid = $("#fromaccount").val();
+		if (typeof userid != "undefined" ) {
+			var postdata = {userid: userid};
 			  
-			 // $.extend(postdata, csrfdata);
+			// $.extend(postdata, csrfdata);
 			  
-			  $.ajax({
-				    url:  rooturl+ "user/getbalance",
-				    type: 'post',
-				    data: postdata,
-				    headers: csrfdata,
-				    dataType: 'json',
-				    success: function (data) {
-				    	 $("#baldiv").html("Total balance is: "+data.balance);
-						 $("#total").val(data.balance);
-				    }
-				});
-		  }
-	  }
+			$.ajax({
+				url:  rooturl+ "user/getbalance",
+				type: 'post',
+				data: postdata,
+				headers: csrfdata,
+				dataType: 'json',
+				success: function (data) {
+					$("#baldiv").html("Total balance is: "+data.balance);
+					$("#total").val(data.balance);
+				}
+			});
+		}
+	}
 	 
-	  getbalance();
-		
+	getbalance();
 
-	 $("#fromaccount").change(function() {
-		 getbalance();
-		 getbankuserslist();
-	 })
+	$("#fromaccount").change(function() {
+		getbalance();
+		getbankuserslist();
+	})
 
-	 var getbankuserslist = function() {
+	var getbankuserslist = function() {
 		  
-		  var fromid = $("#fromaccount").val();
+	var fromid = $("#fromaccount").val();
 		 
-		  if (typeof fromid != "undefined" ) {
+		if (typeof fromid != "undefined" ) {
 			  
-			  var postdata = {
-			  			fromid: fromid, 
-			  			banktype: $("input[name=banktype]:checked").val()
-			  		 }
+			var postdata = {
+					fromid: fromid, 
+			  		banktype: $("input[name=banktype]:checked").val()
+			}
 			  
-			  $.ajax({
+			$.ajax({
 				    url:  rooturl+ "user/getbankuserslist",
 				    type: 'post',
 				    data: postdata,
@@ -62,8 +61,7 @@ $(document).ready(function(){
 				    }
 				});
 		    }
-		  
-		}
+	  }
 	  
 	  $("#transferFrm").submit(function(event) {
 		 var from = $("#fromaccount").val();
@@ -147,4 +145,10 @@ $(document).ready(function(){
 		 }
 		 return true;
 	 }
+	 
+	 $('[name="changestatus"]').click(function(){
+		 $('#selectedid').val(this.id);
+		 $('[name="UserListForm"]').attr('action', rooturl+"admin/changeuserstatus");
+		 $('[name="UserListForm"]').submit();
+	 });
 });
