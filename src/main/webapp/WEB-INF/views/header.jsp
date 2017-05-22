@@ -11,12 +11,17 @@
 <script src="<c:url value="/resources/scripts/myscripts.js" />"></script>
 </head>
 <body>
-
+<form name="logoutFrm" method="post">  
+   <input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />  
+</form>
 <c:set var="role" value="${sessionScope['LOGGED_IN_USER_ROLE']}" />
+<c:set var="loggedInUser" value="${sessionScope['LOGGED_IN_USER']}" />
 <div>
+	Hi ${loggedInUser.getFirstName()}!!
 	<a href="<c:url value='/user/account' />" >Home</a> | 
 	<c:if test="${role == 'ROLE_ADMIN'}">
 	<a href="<c:url value='/admin/userlist' />" >User List</a> | 
 	<a href="<c:url value="/admin/adduser" />">Add User</a> | 
 	<a href="<c:url value='/admin/usertransfer' />" >Admin Funds Transfer</a> | </c:if>
-	<a href="<c:url value='/user/transfer' />" >Funds Transfer</a></div>
+	<a href="<c:url value='/user/transfer' />" >Funds Transfer</a> |
+	 <a href="#" id="logout" >Logout</a></div> 

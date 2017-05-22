@@ -4,8 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="header.jsp" %>
 <h1>Funds Transfer</h1>
-<h2> Hi ${user.getFirstName()} Your <span id="baldiv"></span></h2>
-<div><a href="<c:url value='/user/account' />">Back</a></div>
+<h2> Your <span id="baldiv"></span></h2>
 <div style="color: red">${errormsg}</div>
 <form id="transferFrm" method="post">
  <input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />

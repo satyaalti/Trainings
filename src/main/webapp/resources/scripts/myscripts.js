@@ -167,6 +167,10 @@ $(document).ready(function(){
 			$('#password').val('');
 		 }
 		 $("#trpwd").toggle(1000);
-		 
+	 });
+	 
+	 $("#logout").click(function(){
+		 $('[name="logoutFrm"]').attr('action', rooturl+"j_spring_security_logout");
+		 $('[name="logoutFrm"]').submit();
 	 });
 });
